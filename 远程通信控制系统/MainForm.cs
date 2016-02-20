@@ -10,11 +10,21 @@ using System.Windows.Forms;
 
 namespace 远程通信控制系统
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSendFile_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

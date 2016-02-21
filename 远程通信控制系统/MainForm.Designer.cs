@@ -71,12 +71,14 @@
             this.用户登录ToolStripMenuItem.Name = "用户登录ToolStripMenuItem";
             this.用户登录ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.用户登录ToolStripMenuItem.Text = "用户登录";
+            this.用户登录ToolStripMenuItem.Click += new System.EventHandler(this.用户登录ToolStripMenuItem_Click);
             // 
             // 用户注册ToolStripMenuItem
             // 
             this.用户注册ToolStripMenuItem.Name = "用户注册ToolStripMenuItem";
             this.用户注册ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.用户注册ToolStripMenuItem.Text = "用户注册";
+            this.用户注册ToolStripMenuItem.Click += new System.EventHandler(this.用户注册ToolStripMenuItem_Click);
             // 
             // 系统设置ToolStripMenuItem
             // 
@@ -139,6 +141,7 @@
             this.buttonSend.TabIndex = 4;
             this.buttonSend.Text = "发送";
             this.buttonSend.UseVisualStyleBackColor = true;
+            this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
             // 
             // buttonSendFile
             // 

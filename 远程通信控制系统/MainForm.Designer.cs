@@ -69,22 +69,23 @@
             // 用户登录ToolStripMenuItem
             // 
             this.用户登录ToolStripMenuItem.Name = "用户登录ToolStripMenuItem";
-            this.用户登录ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.用户登录ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.用户登录ToolStripMenuItem.Text = "用户登录";
             this.用户登录ToolStripMenuItem.Click += new System.EventHandler(this.用户登录ToolStripMenuItem_Click);
             // 
             // 用户注册ToolStripMenuItem
             // 
             this.用户注册ToolStripMenuItem.Name = "用户注册ToolStripMenuItem";
-            this.用户注册ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.用户注册ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.用户注册ToolStripMenuItem.Text = "用户注册";
             this.用户注册ToolStripMenuItem.Click += new System.EventHandler(this.用户注册ToolStripMenuItem_Click);
             // 
             // 系统设置ToolStripMenuItem
             // 
             this.系统设置ToolStripMenuItem.Name = "系统设置ToolStripMenuItem";
-            this.系统设置ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.系统设置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.系统设置ToolStripMenuItem.Text = "系统设置";
+            this.系统设置ToolStripMenuItem.Click += new System.EventHandler(this.系统设置ToolStripMenuItem_Click);
             // 
             // statusStrip
             // 

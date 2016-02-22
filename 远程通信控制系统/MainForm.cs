@@ -25,20 +25,30 @@ namespace 远程通信控制系统
         private void 用户登录ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LoginForm loginForm = new LoginForm();
-            loginForm.Location = new Point(this.Location.X + this.Size.Width / 2 - loginForm.Size.Width / 2, this.Location.Y + this.Size.Height / 2 - loginForm.Size.Height / 2);
-            loginForm.ShowDialog();
+            ShowFormCenter(loginForm, this);
         }
 
         private void 用户注册ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RegistForm registForm = new RegistForm();
-            registForm.Location = new Point(this.Location.X + this.Size.Width / 2 - registForm.Size.Width / 2, this.Location.Y + this.Size.Height / 2 - registForm.Size.Height / 2);
-            registForm.ShowDialog();
+            ShowFormCenter(registForm, this);
         }
 
         private void buttonSend_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void 系统设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsForm settingForm = new SettingsForm();
+            ShowFormCenter(settingForm, this);
+        }
+
+        private void ShowFormCenter(Form form, Form parentForm)
+        {
+            form.Location = new Point(parentForm.Location.X + parentForm.Size.Width / 2 - form.Size.Width / 2, parentForm.Location.Y + parentForm.Size.Height / 2 - form.Size.Height / 2);
+            form.ShowDialog();
         }
     }
 }

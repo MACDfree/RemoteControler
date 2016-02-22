@@ -16,5 +16,15 @@ namespace 远程通信控制系统
         {
             InitializeComponent();
         }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show(this, "测试成功！");
+        }
     }
 }

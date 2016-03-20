@@ -19,7 +19,8 @@ namespace 远程通信控制系统
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
+            SettingsForm settingForm = new SettingsForm();
+            ShowFormCenter(settingForm, this);
         }
 
         private void 用户登录ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -37,12 +38,6 @@ namespace 远程通信控制系统
         private void buttonSend_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void 系统设置ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SettingsForm settingForm = new SettingsForm();
-            ShowFormCenter(settingForm, this);
         }
 
         private void ShowFormCenter(Form form, Form parentForm)

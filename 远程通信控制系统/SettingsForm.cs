@@ -26,5 +26,15 @@ namespace 远程通信控制系统
         {
             MessageBox.Show(this, "测试成功！");
         }
+
+        private void buttonConfirm_Click(object sender, EventArgs e)
+        {
+            Config config = ConfigUtil.getConfig();
+        }
+
+        private void SettingsForm_Load(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

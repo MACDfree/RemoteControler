@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace 远程通信控制系统
 {
@@ -14,8 +11,15 @@ namespace 远程通信控制系统
     static class ConfigUtil
     {
         static private Config config;
-        static private Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        static private Configuration configuration;
         // TODO 将Config类映射为配置文件中的一个节点，使用工具类实现参数的读写，并同步至配置文件中
+
+        static ConfigUtil()
+        {
+            ExeConfigurationFileMap file = new ExeConfigurationFileMap();
+            file.ExeConfigFilename = "远程通信控制系统.exe.config";
+            configuration = ConfigurationManager.OpenMappedExeConfiguration(file, ConfigurationUserLevel.None);
+        }
 
         static public Config getConfig()
         {
@@ -34,11 +38,11 @@ namespace 远程通信控制系统
             {
                 if (containsKey(prop.Name))
                 {
-                    if (prop.GetType() == typeof(int))
+                    if (prop.PropertyType == typeof(int))
                     {
                         prop.SetValue(config, readConfigInt(prop.Name));
                     }
-                    else if (prop.GetType() == typeof(bool))
+                    else if (prop.PropertyType == typeof(bool))
                     {
                         prop.SetValue(config, readConfigBool(prop.Name));
                     }
@@ -53,9 +57,8 @@ namespace 远程通信控制系统
                 }
 
                 // TODO 根据config类中的属性删除配置文件中多余的节点
-
-                configuration.Save();
             }
+            configuration.Save();
         }
 
         static public void update(Config config)
@@ -72,6 +75,7 @@ namespace 远程通信控制系统
                     addConfig(prop.Name, prop.GetValue(config));
                 }
             }
+            configuration.Save();
         }
 
         static private String readConfigStr(string key)
@@ -120,11 +124,13 @@ namespace 远程通信控制系统
 
         static private void addConfig(string key, object value)
         {
+            value = value == null ? "" : value;
             configuration.AppSettings.Settings.Add(key, value.ToString());
         }
 
         static private void writeConfig(string key, object value)
         {
+            value = value == null ? "" : value;
             configuration.AppSettings.Settings[key].Value = value.ToString();
         }
 

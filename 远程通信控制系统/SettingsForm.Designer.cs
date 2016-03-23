@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBoxRemoteIP = new System.Windows.Forms.TextBox();
+            this.textBoxServiceIP = new System.Windows.Forms.TextBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBoxLocalIP = new System.Windows.Forms.TextBox();
+            this.textBoxClientIP = new System.Windows.Forms.TextBox();
             this.radioButtonService = new System.Windows.Forms.RadioButton();
             this.radioButtonClient = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -44,18 +44,18 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(37, 13);
+            this.label1.Location = new System.Drawing.Point(25, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 0;
-            this.label1.Text = "远程IP：";
+            this.label1.Text = "服务器IP：";
             // 
-            // textBoxRemoteIP
+            // textBoxServiceIP
             // 
-            this.textBoxRemoteIP.Location = new System.Drawing.Point(96, 10);
-            this.textBoxRemoteIP.Name = "textBoxRemoteIP";
-            this.textBoxRemoteIP.Size = new System.Drawing.Size(128, 21);
-            this.textBoxRemoteIP.TabIndex = 1;
+            this.textBoxServiceIP.Location = new System.Drawing.Point(96, 10);
+            this.textBoxServiceIP.Name = "textBoxServiceIP";
+            this.textBoxServiceIP.Size = new System.Drawing.Size(128, 21);
+            this.textBoxServiceIP.TabIndex = 1;
             // 
             // linkLabel1
             // 
@@ -71,18 +71,18 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 56);
+            this.label2.Location = new System.Drawing.Point(25, 56);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 12);
+            this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 3;
-            this.label2.Text = "本地监听IP：";
+            this.label2.Text = "客户端IP：";
             // 
-            // textBoxLocalIP
+            // textBoxClientIP
             // 
-            this.textBoxLocalIP.Location = new System.Drawing.Point(96, 53);
-            this.textBoxLocalIP.Name = "textBoxLocalIP";
-            this.textBoxLocalIP.Size = new System.Drawing.Size(128, 21);
-            this.textBoxLocalIP.TabIndex = 4;
+            this.textBoxClientIP.Location = new System.Drawing.Point(96, 53);
+            this.textBoxClientIP.Name = "textBoxClientIP";
+            this.textBoxClientIP.Size = new System.Drawing.Size(128, 21);
+            this.textBoxClientIP.TabIndex = 4;
             // 
             // radioButtonService
             // 
@@ -143,10 +143,10 @@
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonConfirm);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.textBoxLocalIP);
+            this.Controls.Add(this.textBoxClientIP);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.linkLabel1);
-            this.Controls.Add(this.textBoxRemoteIP);
+            this.Controls.Add(this.textBoxServiceIP);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "SettingsForm";
@@ -163,10 +163,10 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBoxRemoteIP;
+        private System.Windows.Forms.TextBox textBoxServiceIP;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBoxLocalIP;
+        private System.Windows.Forms.TextBox textBoxClientIP;
         private System.Windows.Forms.RadioButton radioButtonService;
         private System.Windows.Forms.RadioButton radioButtonClient;
         private System.Windows.Forms.Panel panel1;

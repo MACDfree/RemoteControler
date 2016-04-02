@@ -17,6 +17,7 @@ namespace 远程通信控制系统
         static ConfigUtil()
         {
             ExeConfigurationFileMap file = new ExeConfigurationFileMap();
+            // TODO 暂时写死，之后需要动态配置
             file.ExeConfigFilename = "远程通信控制系统.exe.config";
             configuration = ConfigurationManager.OpenMappedExeConfiguration(file, ConfigurationUserLevel.None);
         }
@@ -91,7 +92,7 @@ namespace 远程通信控制系统
             }
             catch (Exception e)
             {
-                // TODO 记录日志
+                LogUtil.GetLog().Write(e);
                 return false;
             }
 
@@ -105,7 +106,7 @@ namespace 远程通信控制系统
             }
             catch (Exception e)
             {
-                // TODO 记录日志
+                LogUtil.GetLog().Write(e);
                 return 0;
             }
 
@@ -131,6 +132,7 @@ namespace 远程通信控制系统
         static private void writeConfig(string key, object value)
         {
             value = value == null ? "" : value;
+            LogUtil.GetLog().Write(key + ":" + value);
             configuration.AppSettings.Settings[key].Value = value.ToString();
         }
 

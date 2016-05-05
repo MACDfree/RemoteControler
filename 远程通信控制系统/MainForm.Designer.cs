@@ -61,8 +61,8 @@
             // toolStripStatusLabel
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(29, 17);
-            this.toolStripStatusLabel.Text = "test";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(32, 17);
+            this.toolStripStatusLabel.Text = "状态";
             // 
             // richTextBoxMessages
             // 

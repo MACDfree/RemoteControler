@@ -14,7 +14,7 @@ namespace 远程通信控制系统
     static class IniUtil
     {
         // 默认为程序的当前路径
-        private static string filepath = Application.StartupPath+@"/config.ini";
+        private static string filepath = Application.StartupPath+"/config.ini";
 
         [DllImport("kernel32")]
         private static extern long WritePrivateProfileString(string section,

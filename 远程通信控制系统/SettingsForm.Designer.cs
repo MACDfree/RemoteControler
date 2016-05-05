@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBoxServiceIP = new System.Windows.Forms.TextBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBoxClientIP = new System.Windows.Forms.TextBox();
             this.radioButtonService = new System.Windows.Forms.RadioButton();
             this.radioButtonClient = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonConfirm = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.comboBoxServiceIP = new System.Windows.Forms.ComboBox();
+            this.comboBoxClientIP = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,13 +49,6 @@
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "服务器IP：";
-            // 
-            // textBoxServiceIP
-            // 
-            this.textBoxServiceIP.Location = new System.Drawing.Point(96, 10);
-            this.textBoxServiceIP.Name = "textBoxServiceIP";
-            this.textBoxServiceIP.Size = new System.Drawing.Size(128, 21);
-            this.textBoxServiceIP.TabIndex = 1;
             // 
             // linkLabel1
             // 
@@ -76,13 +69,6 @@
             this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 3;
             this.label2.Text = "客户端IP：";
-            // 
-            // textBoxClientIP
-            // 
-            this.textBoxClientIP.Location = new System.Drawing.Point(96, 53);
-            this.textBoxClientIP.Name = "textBoxClientIP";
-            this.textBoxClientIP.Size = new System.Drawing.Size(128, 21);
-            this.textBoxClientIP.TabIndex = 4;
             // 
             // radioButtonService
             // 
@@ -135,23 +121,39 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // comboBoxServiceIP
+            // 
+            this.comboBoxServiceIP.FormattingEnabled = true;
+            this.comboBoxServiceIP.Location = new System.Drawing.Point(96, 10);
+            this.comboBoxServiceIP.Name = "comboBoxServiceIP";
+            this.comboBoxServiceIP.Size = new System.Drawing.Size(128, 20);
+            this.comboBoxServiceIP.TabIndex = 8;
+            // 
+            // comboBoxClientIP
+            // 
+            this.comboBoxClientIP.FormattingEnabled = true;
+            this.comboBoxClientIP.Location = new System.Drawing.Point(96, 53);
+            this.comboBoxClientIP.Name = "comboBoxClientIP";
+            this.comboBoxClientIP.Size = new System.Drawing.Size(128, 20);
+            this.comboBoxClientIP.TabIndex = 9;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(297, 172);
+            this.Controls.Add(this.comboBoxClientIP);
+            this.Controls.Add(this.comboBoxServiceIP);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonConfirm);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.textBoxClientIP);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.linkLabel1);
-            this.Controls.Add(this.textBoxServiceIP);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "系统设置";
+            this.Text = "启动设置";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -163,14 +165,14 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBoxServiceIP;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBoxClientIP;
         private System.Windows.Forms.RadioButton radioButtonService;
         private System.Windows.Forms.RadioButton radioButtonClient;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button buttonConfirm;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.ComboBox comboBoxServiceIP;
+        private System.Windows.Forms.ComboBox comboBoxClientIP;
     }
 }

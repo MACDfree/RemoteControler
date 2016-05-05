@@ -37,5 +37,11 @@ namespace 远程通信控制系统
         {
             Write(path, e.Message);
         }
+
+        public void Write(string log, Exception e)
+        {
+            Write(log);
+            Write(e);
+        }
     }
 }

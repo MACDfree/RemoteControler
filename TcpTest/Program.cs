@@ -14,7 +14,7 @@ namespace TcpTest
     {
         static void Main(string[] args)
         {
-            if (args[0]=="s")
+            if (args[0] == "s")
             {
                 Service ser = new Service(1314);
                 ser.Start();
@@ -103,7 +103,7 @@ namespace TcpTest
                 client.Connect(IPAddress.Parse(ip), port);
                 Console.WriteLine("连接成功");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine("连接失败");
                 Console.WriteLine(e.Message);
@@ -127,7 +127,7 @@ namespace TcpTest
                 {
                     message = Common.GetMessage(stream);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                     break;
@@ -152,8 +152,9 @@ namespace TcpTest
             }
 
             int length = getInt(H, MH, ML, L);
-            bool isFile = (T & 0xff) == 14;
 
+            bool isFile = T == 14;
+            Console.WriteLine("GetMessage" + T + isFile);
             Message message = Message.getInstance(isFile, length);
             byte[] content = new byte[length];
             stream.Read(content, 0, length);
@@ -191,7 +192,7 @@ namespace TcpTest
 
         public static void copyByteArray(byte[] src, byte[] dest, int start, int length)
         {
-            for(int i=start, j=0; i<start+length; i++, j++)
+            for (int i = start, j = 0; i < start + length; i++, j++)
             {
                 dest[i] = src[j];
             }
@@ -203,6 +204,7 @@ namespace TcpTest
             byte[] length = getByte(message.Length);
             copyByteArray(length, buff, 0, 4);
             buff[4] = (byte)(message.IsFile ? 14 : 13);
+            Console.WriteLine("convertMessageToByte" + buff[4] + message.IsFile);
             copyByteArray(message.Content, buff, 5, message.Length);
             return buff;
         }
@@ -276,11 +278,11 @@ namespace TcpTest
         {
             if (isFile)
             {
-                return new MessageFile(false, length);
+                return new MessageFile(true, length);
             }
             else
             {
-                return new MessageStr(true, length);
+                return new MessageStr(false, length);
             }
         }
     }

@@ -21,7 +21,7 @@ namespace 远程通信控制系统
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SettingsForm());
+            Application.Run(new MainForm());
         }
     }
 }

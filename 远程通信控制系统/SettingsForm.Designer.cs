@@ -52,8 +52,9 @@
             // 
             // linkLabel1
             // 
+            this.linkLabel1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(230, 13);
+            this.linkLabel1.Location = new System.Drawing.Point(308, 13);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(53, 12);
             this.linkLabel1.TabIndex = 2;
@@ -91,19 +92,20 @@
             this.radioButtonClient.TabStop = true;
             this.radioButtonClient.Text = "客户端";
             this.radioButtonClient.UseVisualStyleBackColor = true;
+            this.radioButtonClient.CheckedChanged += new System.EventHandler(this.radioButtonClient_CheckedChanged);
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.radioButtonService);
             this.panel1.Controls.Add(this.radioButtonClient);
-            this.panel1.Location = new System.Drawing.Point(15, 90);
+            this.panel1.Location = new System.Drawing.Point(59, 90);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(234, 31);
             this.panel1.TabIndex = 6;
             // 
             // buttonConfirm
             // 
-            this.buttonConfirm.Location = new System.Drawing.Point(31, 127);
+            this.buttonConfirm.Location = new System.Drawing.Point(67, 127);
             this.buttonConfirm.Name = "buttonConfirm";
             this.buttonConfirm.Size = new System.Drawing.Size(75, 23);
             this.buttonConfirm.TabIndex = 7;
@@ -113,7 +115,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(160, 127);
+            this.buttonCancel.Location = new System.Drawing.Point(196, 127);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 7;
@@ -126,7 +128,7 @@
             this.comboBoxServiceIP.FormattingEnabled = true;
             this.comboBoxServiceIP.Location = new System.Drawing.Point(96, 10);
             this.comboBoxServiceIP.Name = "comboBoxServiceIP";
-            this.comboBoxServiceIP.Size = new System.Drawing.Size(128, 20);
+            this.comboBoxServiceIP.Size = new System.Drawing.Size(206, 20);
             this.comboBoxServiceIP.TabIndex = 8;
             // 
             // comboBoxClientIP
@@ -134,14 +136,14 @@
             this.comboBoxClientIP.FormattingEnabled = true;
             this.comboBoxClientIP.Location = new System.Drawing.Point(96, 53);
             this.comboBoxClientIP.Name = "comboBoxClientIP";
-            this.comboBoxClientIP.Size = new System.Drawing.Size(128, 20);
+            this.comboBoxClientIP.Size = new System.Drawing.Size(206, 20);
             this.comboBoxClientIP.TabIndex = 9;
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(297, 172);
+            this.ClientSize = new System.Drawing.Size(370, 172);
             this.Controls.Add(this.comboBoxClientIP);
             this.Controls.Add(this.comboBoxServiceIP);
             this.Controls.Add(this.buttonCancel);

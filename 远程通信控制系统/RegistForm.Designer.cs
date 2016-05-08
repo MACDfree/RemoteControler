@@ -78,6 +78,7 @@
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(132, 21);
             this.textBoxPassword.TabIndex = 2;
+            this.textBoxPassword.UseSystemPasswordChar = true;
             // 
             // textBoxConfirm
             // 
@@ -85,6 +86,7 @@
             this.textBoxConfirm.Name = "textBoxConfirm";
             this.textBoxConfirm.Size = new System.Drawing.Size(132, 21);
             this.textBoxConfirm.TabIndex = 3;
+            this.textBoxConfirm.UseSystemPasswordChar = true;
             // 
             // buttonRegist
             // 
@@ -94,6 +96,7 @@
             this.buttonRegist.TabIndex = 4;
             this.buttonRegist.Text = "注册";
             this.buttonRegist.UseVisualStyleBackColor = true;
+            this.buttonRegist.Click += new System.EventHandler(this.buttonRegist_Click);
             // 
             // buttonCancel
             // 
@@ -122,6 +125,7 @@
             this.Name = "RegistForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "用户注册";
+            this.Load += new System.EventHandler(this.RegistForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

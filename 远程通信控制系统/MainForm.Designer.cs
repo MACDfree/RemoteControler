@@ -37,7 +37,13 @@
             this.buttonSendFile = new System.Windows.Forms.Button();
             this.buttonPrtSc = new System.Windows.Forms.Button();
             this.buttonMB = new System.Windows.Forms.Button();
+            this.menuStripTool = new System.Windows.Forms.MenuStrip();
+            this.设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.启动项配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.登录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.注册ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
+            this.menuStripTool.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -70,9 +76,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxMessages.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBoxMessages.Location = new System.Drawing.Point(0, 1);
+            this.richTextBoxMessages.Location = new System.Drawing.Point(0, 28);
             this.richTextBoxMessages.Name = "richTextBoxMessages";
-            this.richTextBoxMessages.Size = new System.Drawing.Size(449, 255);
+            this.richTextBoxMessages.Size = new System.Drawing.Size(449, 228);
             this.richTextBoxMessages.TabIndex = 2;
             this.richTextBoxMessages.Text = "";
             // 
@@ -128,6 +134,47 @@
             this.buttonMB.Text = "鼠标/键盘";
             this.buttonMB.UseVisualStyleBackColor = true;
             // 
+            // menuStripTool
+            // 
+            this.menuStripTool.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.设置ToolStripMenuItem});
+            this.menuStripTool.Location = new System.Drawing.Point(0, 0);
+            this.menuStripTool.Name = "menuStripTool";
+            this.menuStripTool.Size = new System.Drawing.Size(449, 25);
+            this.menuStripTool.TabIndex = 6;
+            this.menuStripTool.Text = "menuStrip1";
+            // 
+            // 设置ToolStripMenuItem
+            // 
+            this.设置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.启动项配置ToolStripMenuItem,
+            this.登录ToolStripMenuItem,
+            this.注册ToolStripMenuItem});
+            this.设置ToolStripMenuItem.Name = "设置ToolStripMenuItem";
+            this.设置ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.设置ToolStripMenuItem.Text = "设置";
+            // 
+            // 启动项配置ToolStripMenuItem
+            // 
+            this.启动项配置ToolStripMenuItem.Name = "启动项配置ToolStripMenuItem";
+            this.启动项配置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.启动项配置ToolStripMenuItem.Text = "启动项配置";
+            this.启动项配置ToolStripMenuItem.Click += new System.EventHandler(this.启动项配置ToolStripMenuItem_Click);
+            // 
+            // 登录ToolStripMenuItem
+            // 
+            this.登录ToolStripMenuItem.Name = "登录ToolStripMenuItem";
+            this.登录ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.登录ToolStripMenuItem.Text = "登录";
+            this.登录ToolStripMenuItem.Click += new System.EventHandler(this.登录ToolStripMenuItem_Click);
+            // 
+            // 注册ToolStripMenuItem
+            // 
+            this.注册ToolStripMenuItem.Name = "注册ToolStripMenuItem";
+            this.注册ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.注册ToolStripMenuItem.Text = "注册";
+            this.注册ToolStripMenuItem.Click += new System.EventHandler(this.注册ToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -140,10 +187,14 @@
             this.Controls.Add(this.richTextBoxSend);
             this.Controls.Add(this.richTextBoxMessages);
             this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.menuStripTool);
+            this.MainMenuStrip = this.menuStripTool;
             this.Name = "MainForm";
             this.Text = "远程通信控制系统";
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.menuStripTool.ResumeLayout(false);
+            this.menuStripTool.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -159,6 +210,11 @@
         private System.Windows.Forms.Button buttonSendFile;
         private System.Windows.Forms.Button buttonPrtSc;
         private System.Windows.Forms.Button buttonMB;
+        private System.Windows.Forms.MenuStrip menuStripTool;
+        private System.Windows.Forms.ToolStripMenuItem 设置ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 启动项配置ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 登录ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 注册ToolStripMenuItem;
     }
 }
 

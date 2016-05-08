@@ -21,5 +21,14 @@ namespace 远程通信控制系统
         {
             this.Close();
         }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            if (GlobalVal.isService)
+            {
+                MessageBox.Show("服务器端不需要登录！");
+                this.Close();
+            }
+        }
     }
 }

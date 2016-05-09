@@ -62,6 +62,7 @@ namespace 远程通信控制系统
             LogUtil.GetLog().Write("开始监听...");
             listener.Start(1);
             listenThread = new Thread(listenFun);
+            listenThread.IsBackground = true;
             LogUtil.GetLog().Write("开始启动监听线程...");
             listenThread.Start();
         }
@@ -114,8 +115,14 @@ namespace 远程通信控制系统
         {
             try
             {
-                client = new TcpClient();
-                client.Connect(IPAddress.Parse(ip), port);
+                if (client==null)
+                {
+                    client = new TcpClient();
+                }
+                if (!client.Connected)
+                {
+                    client.Connect(IPAddress.Parse(ip), port);
+                }
                 LogUtil.GetLog().Write("连接成功");
             }
             catch (Exception e)
@@ -124,11 +131,6 @@ namespace 远程通信控制系统
                 throw e;
             }
             stream = client.GetStream();
-            //byte[] buff = Common.convertMessageToByte(MessageStr.getLoginMessage("test", "11111"));
-            //stream.Write(buff, 0, buff.Length);
-            //Thread receiveThread = new Thread(ReceiveFun);
-            //receiveThread.IsBackground = true;
-            //receiveThread.Start();
         }
 
         private void ReceiveFun()

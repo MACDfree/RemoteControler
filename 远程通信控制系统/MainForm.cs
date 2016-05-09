@@ -42,6 +42,8 @@ namespace 远程通信控制系统
             ShowFormCenter(settingForm, this);
             if (GlobalVal.isService)
             {
+                登录ToolStripMenuItem.Enabled = false;
+                注册ToolStripMenuItem.Enabled = false;
                 service = TcpCommon.getService();
                 if (service == null)
                 {
@@ -49,6 +51,11 @@ namespace 远程通信控制系统
                     return;
                 }
                 service.Start(ListenFun);
+            }
+            else
+            {
+                登录ToolStripMenuItem.Enabled = true;
+                注册ToolStripMenuItem.Enabled = true;
             }
         }
 
@@ -75,17 +82,32 @@ namespace 远程通信控制系统
                         switch (obj["cmd"].ToString())
                         {
                             case "1": //Login
+                                if (GlobalVal.isLogin)
+                                {
+                                    byte[] buff1 = Common.convertMessageToByte(MessageStr.getRetMessage(false, "已登录，请不要重复登录！"));
+                                    stream.Write(buff1, 0, buff1.Length);
+                                }
+                                else
+                                {
+                                    // TODO 数据库操作
+                                    byte[] buff1 = Common.convertMessageToByte(MessageStr.getRetMessage(true, ""));
+                                    stream.Write(buff1, 0, buff1.Length);
+                                    GlobalVal.isLogin = true;
+                                }
                                 break;
                             case "2": //Logout
+                                // TODO 可以先不写
                                 break;
                             case "3": //Talk
                                 break;
                             case "4": //Regist
                                 string username = obj["username"].ToString();
                                 string password = obj["password"].ToString();
-
+                                // TODO 增加数据库操作
                                 byte[] buff = Common.convertMessageToByte(MessageStr.getRetMessage(true, ""));
+                                GlobalVal.isLogin = true;
                                 stream.Write(buff, 0, buff.Length);
+                                toolStripStatusLabel.Text = username+"注册并登录成功！";
                                 break;
                         }
                     }
@@ -95,6 +117,7 @@ namespace 远程通信控制系统
             {
                 LogUtil.GetLog().Write("服务器监听出错", ex);
                 MessageBox.Show("服务器监听出错！");
+                toolStripStatusLabel.Text = "服务器监听出错！";
             }
             goto loop;
         }
@@ -109,6 +132,7 @@ namespace 远程通信控制系统
         {
             RegistForm registForm = new RegistForm();
             ShowFormCenter(registForm, this);
+
         }
     }
 }

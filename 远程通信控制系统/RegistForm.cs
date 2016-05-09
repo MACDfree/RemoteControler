@@ -87,6 +87,7 @@ namespace 远程通信控制系统
                         }
                     }
                     MessageBox.Show("超时出错！");
+
                 });
                 registThread.IsBackground = true;
                 registThread.Start();

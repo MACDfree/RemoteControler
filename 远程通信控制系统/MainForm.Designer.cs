@@ -67,6 +67,7 @@
             // toolStripStatusLabel
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.toolStripStatusLabel.Size = new System.Drawing.Size(32, 17);
             this.toolStripStatusLabel.Text = "状态";
             // 
@@ -157,21 +158,21 @@
             // 启动项配置ToolStripMenuItem
             // 
             this.启动项配置ToolStripMenuItem.Name = "启动项配置ToolStripMenuItem";
-            this.启动项配置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.启动项配置ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.启动项配置ToolStripMenuItem.Text = "启动项配置";
             this.启动项配置ToolStripMenuItem.Click += new System.EventHandler(this.启动项配置ToolStripMenuItem_Click);
             // 
             // 登录ToolStripMenuItem
             // 
             this.登录ToolStripMenuItem.Name = "登录ToolStripMenuItem";
-            this.登录ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.登录ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.登录ToolStripMenuItem.Text = "登录";
             this.登录ToolStripMenuItem.Click += new System.EventHandler(this.登录ToolStripMenuItem_Click);
             // 
             // 注册ToolStripMenuItem
             // 
             this.注册ToolStripMenuItem.Name = "注册ToolStripMenuItem";
-            this.注册ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.注册ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.注册ToolStripMenuItem.Text = "注册";
             this.注册ToolStripMenuItem.Click += new System.EventHandler(this.注册ToolStripMenuItem_Click);
             // 

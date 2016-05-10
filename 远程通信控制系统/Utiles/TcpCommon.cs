@@ -323,9 +323,18 @@ namespace 远程通信控制系统
             loginMessage.Content = buff;
             return loginMessage;
         }
-        public static MessageStr getRetMessage(bool isSuccess, String msg)
+        public static MessageStr getRetMessage(bool isSuccess, string msg)
         {
             JObject obj = new JObject(new JProperty("isSuccess", isSuccess), new JProperty("msg", msg));
+            byte[] buff = Encoding.UTF8.GetBytes(obj.ToString());
+            MessageStr message = new MessageStr(false, buff.Length);
+            message.Content = buff;
+            return message;
+        }
+
+        public static MessageStr getTalkMessage(string msg)
+        {
+            JObject obj = new JObject(new JProperty("cmd", (int)CmdType.Talk), new JProperty("msg", msg));
             byte[] buff = Encoding.UTF8.GetBytes(obj.ToString());
             MessageStr message = new MessageStr(false, buff.Length);
             message.Content = buff;

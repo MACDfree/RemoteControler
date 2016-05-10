@@ -58,6 +58,7 @@ namespace 远程通信控制系统
                 {
                     DateTime begin = DateTime.Now;
                     Message message = null;
+                    // 超时10秒
                     while ((DateTime.Now - begin).TotalSeconds <= 10)
                     {
                         try
@@ -77,6 +78,8 @@ namespace 远程通信控制系统
                             if ((bool)obj["isSuccess"])
                             {
                                 MessageBox.Show("注册成功！");
+                                GlobalVal.username = textBoxUsername.Text;
+                                GlobalVal.isLogin = true;
                                 return;
                             }
                             else

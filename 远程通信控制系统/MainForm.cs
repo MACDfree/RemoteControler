@@ -16,6 +16,7 @@ namespace 远程通信控制系统
     public partial class MainForm : Form
     {
         Service service = null;
+        TcpClient client = null;
         public MainForm()
         {
             InitializeComponent();
@@ -35,9 +36,14 @@ namespace 远程通信控制系统
             }
             if (GlobalVal.isLogin)
             {
-                if(GlobalVal.isService)
+                setText(richTextBoxSend.Text);
+                if (GlobalVal.isService)
                 {
-
+                    if (client != null)
+                    {
+                        byte[] buff = Common.convertMessageToByte(MessageStr.getTalkMessage(richTextBoxSend.Text));
+                        client.GetStream().Write(buff, 0, buff.Length);
+                    }
                 }
                 else
                 {
@@ -93,7 +99,7 @@ namespace 远程通信控制系统
 
         private void ListenFun()
         {
-            TcpClient client = null;
+            client = null;
         loop:
             try
             {
@@ -136,7 +142,7 @@ namespace 远程通信控制系统
                                 // TODO 可以先不写
                                 break;
                             case "3": //Talk
-                                if(GlobalVal.isLogin)
+                                if (GlobalVal.isLogin)
                                 {
                                     setText(obj["msg"].ToString());
                                 }
@@ -148,7 +154,7 @@ namespace 远程通信控制系统
                                 byte[] buff = Common.convertMessageToByte(MessageStr.getRetMessage(true, ""));
                                 GlobalVal.isLogin = true;
                                 stream.Write(buff, 0, buff.Length);
-                                toolStripStatusLabel.Text = username+"注册并登录成功！";
+                                toolStripStatusLabel.Text = username + "注册并登录成功！";
                                 break;
                         }
                     }
@@ -179,23 +185,133 @@ namespace 远程通信控制系统
 
         private void 登录ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LoginForm loginForm = new LoginForm();
-            ShowFormCenter(loginForm, this);
-            if (!GlobalVal.isService && GlobalVal.isLogin)
+            if (!GlobalVal.isLogin)
             {
-                toolStripStatusLabel.Text = GlobalVal.username + "登录成功！";
+                LoginForm loginForm = new LoginForm();
+                ShowFormCenter(loginForm, this);
+                if (!GlobalVal.isService && GlobalVal.isLogin)
+                {
+                    toolStripStatusLabel.Text = GlobalVal.username + "登录成功！";
+                    Client client = TcpCommon.getClient();
+                    try
+                    {
+                        client.Connect();
+                        Thread talkThread = new Thread(() =>
+                        {
+                            Message message = null;
+                            while (true)
+                            {
+                                try
+                                {
+                                    message = Common.GetMessage(client.stream);
+                                    if(message.IsFile)
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        string content = Encoding.UTF8.GetString(message.Content);
+                                        JObject obj = JObject.Parse(content);
+                                        if (obj["cmd"].ToString()=="3")//Talk
+                                        {
+                                            setText(obj["msg"].ToString());
+                                        }
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    LogUtil.GetLog().Write(ex.StackTrace);
+                                    MessageBox.Show("运行出错！");
+                                    return;
+                                }
+                            }
+                        });
+                        talkThread.IsBackground = true;
+                        talkThread.Start();
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtil.GetLog().Write(ex);
+                        MessageBox.Show("运行出错！");
+                    }
+                }
             }
         }
 
         private void 注册ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RegistForm registForm = new RegistForm();
-            ShowFormCenter(registForm, this);
-            if (!GlobalVal.isService && GlobalVal.isLogin)
+            if (!GlobalVal.isLogin)
             {
-                toolStripStatusLabel.Text = GlobalVal.username + "注册并登录成功！";
-            }
+                RegistForm registForm = new RegistForm();
+                ShowFormCenter(registForm, this);
+                if (!GlobalVal.isService && GlobalVal.isLogin)
+                {
+                    toolStripStatusLabel.Text = GlobalVal.username + "注册并登录成功！";
+                    Client client = TcpCommon.getClient();
+                    try
+                    {
+                        client.Connect();
+                        Thread talkThread = new Thread(() =>
+                        {
+                            Message message = null;
+                            while (true)
+                            {
+                                try
+                                {
+                                    message = Common.GetMessage(client.stream);
+                                    if (message.IsFile)
+                                    {
 
+                                    }
+                                    else
+                                    {
+                                        string content = Encoding.UTF8.GetString(message.Content);
+                                        JObject obj = JObject.Parse(content);
+                                        switch(obj["cmd"].ToString())
+                                        {
+                                            case "3":// Talk
+                                                setText(obj["msg"].ToString());
+                                                break;
+                                        }
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    LogUtil.GetLog().Write(ex.StackTrace);
+                                    MessageBox.Show("运行出错！");
+                                    return;
+                                }
+                            }
+                        });
+                        talkThread.IsBackground = true;
+                        talkThread.Start();
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtil.GetLog().Write(ex);
+                        MessageBox.Show("运行出错！");
+                    }
+                }
+            }
+        }
+
+        private void buttonSendFile_Click(object sender, EventArgs e)
+        {
+            if(GlobalVal.isService)
+            {
+
+            }
+            else
+            {
+                OpenFileDialog fileDialog = new OpenFileDialog();
+                fileDialog.Multiselect = false;
+                fileDialog.Title = "文件选择";
+                if(fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string fileName = fileDialog.FileName;// 获取文件路径
+                    MessageBox.Show(fileName);
+                }
+            }
         }
     }
 }

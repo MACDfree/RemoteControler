@@ -98,8 +98,9 @@ namespace 远程通信控制系统
                 loginThread.IsBackground = true;
                 loginThread.Start();
             }
-            catch
+            catch(Exception ex)
             {
+                LogUtil.GetLog().Write(ex);
                 MessageBox.Show("运行出错！");
             }
         }

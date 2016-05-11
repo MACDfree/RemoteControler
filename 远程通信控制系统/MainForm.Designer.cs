@@ -114,6 +114,7 @@
             this.buttonSendFile.TabIndex = 5;
             this.buttonSendFile.Text = "发送文件";
             this.buttonSendFile.UseVisualStyleBackColor = true;
+            this.buttonSendFile.Click += new System.EventHandler(this.buttonSendFile_Click);
             // 
             // buttonPrtSc
             // 

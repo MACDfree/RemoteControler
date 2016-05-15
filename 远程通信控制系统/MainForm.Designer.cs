@@ -45,7 +45,7 @@
             this.注册ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.buttonCmd = new System.Windows.Forms.Button();
-            this.textBoxCmd = new System.Windows.Forms.TextBox();
+            this.comboBoxCmd = new System.Windows.Forms.ComboBox();
             this.statusStrip.SuspendLayout();
             this.menuStripTool.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -183,7 +183,8 @@
             // 
             // pictureBox
             // 
-            this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox.Location = new System.Drawing.Point(476, 28);
             this.pictureBox.Name = "pictureBox";
@@ -193,6 +194,7 @@
             // 
             // buttonCmd
             // 
+            this.buttonCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonCmd.Location = new System.Drawing.Point(508, 399);
             this.buttonCmd.Name = "buttonCmd";
             this.buttonCmd.Size = new System.Drawing.Size(75, 23);
@@ -201,19 +203,21 @@
             this.buttonCmd.UseVisualStyleBackColor = true;
             this.buttonCmd.Click += new System.EventHandler(this.buttonCmd_Click);
             // 
-            // textBoxCmd
+            // comboBoxCmd
             // 
-            this.textBoxCmd.Location = new System.Drawing.Point(285, 401);
-            this.textBoxCmd.Name = "textBoxCmd";
-            this.textBoxCmd.Size = new System.Drawing.Size(217, 21);
-            this.textBoxCmd.TabIndex = 9;
+            this.comboBoxCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.comboBoxCmd.FormattingEnabled = true;
+            this.comboBoxCmd.Location = new System.Drawing.Point(295, 401);
+            this.comboBoxCmd.Name = "comboBoxCmd";
+            this.comboBoxCmd.Size = new System.Drawing.Size(207, 20);
+            this.comboBoxCmd.TabIndex = 10;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1034, 458);
-            this.Controls.Add(this.textBoxCmd);
+            this.Controls.Add(this.comboBoxCmd);
             this.Controls.Add(this.buttonCmd);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.buttonMB);
@@ -255,7 +259,7 @@
         private System.Windows.Forms.ToolStripMenuItem 注册ToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Button buttonCmd;
-        private System.Windows.Forms.TextBox textBoxCmd;
+        private System.Windows.Forms.ComboBox comboBoxCmd;
     }
 }
 

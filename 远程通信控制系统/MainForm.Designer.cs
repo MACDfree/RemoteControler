@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -42,8 +43,12 @@
             this.启动项配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.登录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.注册ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.buttonCmd = new System.Windows.Forms.Button();
+            this.textBoxCmd = new System.Windows.Forms.TextBox();
             this.statusStrip.SuspendLayout();
             this.menuStripTool.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -51,10 +56,10 @@
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar,
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 384);
+            this.statusStrip.Location = new System.Drawing.Point(0, 436);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.statusStrip.Size = new System.Drawing.Size(449, 22);
+            this.statusStrip.Size = new System.Drawing.Size(1034, 22);
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 1;
             this.statusStrip.Text = "底部状态栏";
@@ -73,33 +78,31 @@
             // 
             // richTextBoxMessages
             // 
-            this.richTextBoxMessages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxMessages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.richTextBoxMessages.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBoxMessages.Location = new System.Drawing.Point(0, 28);
             this.richTextBoxMessages.Name = "richTextBoxMessages";
-            this.richTextBoxMessages.Size = new System.Drawing.Size(449, 228);
+            this.richTextBoxMessages.Size = new System.Drawing.Size(470, 280);
             this.richTextBoxMessages.TabIndex = 2;
             this.richTextBoxMessages.Text = "";
             // 
             // richTextBoxSend
             // 
-            this.richTextBoxSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.richTextBoxSend.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBoxSend.Location = new System.Drawing.Point(0, 262);
+            this.richTextBoxSend.Location = new System.Drawing.Point(0, 314);
             this.richTextBoxSend.Name = "richTextBoxSend";
-            this.richTextBoxSend.Size = new System.Drawing.Size(372, 79);
+            this.richTextBoxSend.Size = new System.Drawing.Size(385, 79);
             this.richTextBoxSend.TabIndex = 3;
             this.richTextBoxSend.Text = "";
             // 
             // buttonSend
             // 
-            this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSend.Location = new System.Drawing.Point(372, 262);
+            this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonSend.Location = new System.Drawing.Point(391, 314);
             this.buttonSend.Name = "buttonSend";
-            this.buttonSend.Size = new System.Drawing.Size(77, 79);
+            this.buttonSend.Size = new System.Drawing.Size(79, 79);
             this.buttonSend.TabIndex = 4;
             this.buttonSend.Text = "发送";
             this.buttonSend.UseVisualStyleBackColor = true;
@@ -108,9 +111,9 @@
             // buttonSendFile
             // 
             this.buttonSendFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonSendFile.Location = new System.Drawing.Point(12, 347);
+            this.buttonSendFile.Location = new System.Drawing.Point(12, 399);
             this.buttonSendFile.Name = "buttonSendFile";
-            this.buttonSendFile.Size = new System.Drawing.Size(134, 23);
+            this.buttonSendFile.Size = new System.Drawing.Size(75, 23);
             this.buttonSendFile.TabIndex = 5;
             this.buttonSendFile.Text = "发送文件";
             this.buttonSendFile.UseVisualStyleBackColor = true;
@@ -118,20 +121,21 @@
             // 
             // buttonPrtSc
             // 
-            this.buttonPrtSc.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.buttonPrtSc.Location = new System.Drawing.Point(152, 347);
+            this.buttonPrtSc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonPrtSc.Location = new System.Drawing.Point(93, 399);
             this.buttonPrtSc.Name = "buttonPrtSc";
-            this.buttonPrtSc.Size = new System.Drawing.Size(136, 23);
+            this.buttonPrtSc.Size = new System.Drawing.Size(75, 23);
             this.buttonPrtSc.TabIndex = 5;
             this.buttonPrtSc.Text = "截图";
             this.buttonPrtSc.UseVisualStyleBackColor = true;
+            this.buttonPrtSc.Click += new System.EventHandler(this.buttonPrtSc_Click);
             // 
             // buttonMB
             // 
-            this.buttonMB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonMB.Location = new System.Drawing.Point(294, 347);
+            this.buttonMB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonMB.Location = new System.Drawing.Point(174, 399);
             this.buttonMB.Name = "buttonMB";
-            this.buttonMB.Size = new System.Drawing.Size(143, 23);
+            this.buttonMB.Size = new System.Drawing.Size(86, 23);
             this.buttonMB.TabIndex = 5;
             this.buttonMB.Text = "鼠标/键盘";
             this.buttonMB.UseVisualStyleBackColor = true;
@@ -142,7 +146,7 @@
             this.设置ToolStripMenuItem});
             this.menuStripTool.Location = new System.Drawing.Point(0, 0);
             this.menuStripTool.Name = "menuStripTool";
-            this.menuStripTool.Size = new System.Drawing.Size(449, 25);
+            this.menuStripTool.Size = new System.Drawing.Size(1034, 25);
             this.menuStripTool.TabIndex = 6;
             this.menuStripTool.Text = "menuStrip1";
             // 
@@ -177,11 +181,41 @@
             this.注册ToolStripMenuItem.Text = "注册";
             this.注册ToolStripMenuItem.Click += new System.EventHandler(this.注册ToolStripMenuItem_Click);
             // 
+            // pictureBox
+            // 
+            this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox.Location = new System.Drawing.Point(476, 28);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(558, 365);
+            this.pictureBox.TabIndex = 7;
+            this.pictureBox.TabStop = false;
+            // 
+            // buttonCmd
+            // 
+            this.buttonCmd.Location = new System.Drawing.Point(508, 399);
+            this.buttonCmd.Name = "buttonCmd";
+            this.buttonCmd.Size = new System.Drawing.Size(75, 23);
+            this.buttonCmd.TabIndex = 8;
+            this.buttonCmd.Text = "执行命令";
+            this.buttonCmd.UseVisualStyleBackColor = true;
+            this.buttonCmd.Click += new System.EventHandler(this.buttonCmd_Click);
+            // 
+            // textBoxCmd
+            // 
+            this.textBoxCmd.Location = new System.Drawing.Point(285, 401);
+            this.textBoxCmd.Name = "textBoxCmd";
+            this.textBoxCmd.Size = new System.Drawing.Size(217, 21);
+            this.textBoxCmd.TabIndex = 9;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(449, 406);
+            this.ClientSize = new System.Drawing.Size(1034, 458);
+            this.Controls.Add(this.textBoxCmd);
+            this.Controls.Add(this.buttonCmd);
+            this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.buttonMB);
             this.Controls.Add(this.buttonPrtSc);
             this.Controls.Add(this.buttonSendFile);
@@ -190,6 +224,7 @@
             this.Controls.Add(this.richTextBoxMessages);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStripTool);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripTool;
             this.Name = "MainForm";
             this.Text = "远程通信控制系统";
@@ -197,6 +232,7 @@
             this.statusStrip.PerformLayout();
             this.menuStripTool.ResumeLayout(false);
             this.menuStripTool.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -217,6 +253,9 @@
         private System.Windows.Forms.ToolStripMenuItem 启动项配置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 登录ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 注册ToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.Button buttonCmd;
+        private System.Windows.Forms.TextBox textBoxCmd;
     }
 }
 

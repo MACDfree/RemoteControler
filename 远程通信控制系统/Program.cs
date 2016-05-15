@@ -15,6 +15,7 @@ namespace 远程通信控制系统
         [STAThread]
         static void Main()
         {
+            GlobalVal.currentDir = Application.StartupPath;
             if (!File.Exists(Application.StartupPath + "/config.ini"))
             {
                 IniUtil.Write("common", "serviceport", "1314");

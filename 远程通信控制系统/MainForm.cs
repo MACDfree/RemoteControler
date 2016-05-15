@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -17,6 +20,7 @@ namespace 远程通信控制系统
     {
         Service service = null;
         TcpClient client = null;
+        string fileName = "";
         public MainForm()
         {
             InitializeComponent();
@@ -80,8 +84,8 @@ namespace 远程通信控制系统
             ShowFormCenter(settingForm, this);
             if (GlobalVal.isService)
             {
-                登录ToolStripMenuItem.Enabled = false;
-                注册ToolStripMenuItem.Enabled = false;
+                登录ToolStripMenuItem.Visible = false;
+                注册ToolStripMenuItem.Visible = false;
                 service = TcpCommon.getService();
                 if (service == null)
                 {
@@ -92,8 +96,8 @@ namespace 远程通信控制系统
             }
             else
             {
-                登录ToolStripMenuItem.Enabled = true;
-                注册ToolStripMenuItem.Enabled = true;
+                登录ToolStripMenuItem.Visible = true;
+                注册ToolStripMenuItem.Visible = true;
             }
         }
 
@@ -111,7 +115,14 @@ namespace 远程通信控制系统
                     Message message = Common.GetMessage(stream);
                     if (message.IsFile)
                     {
-
+                        int filelength;
+                        byte[] filecontent;
+                        string filename;
+                        MessageFile.getFileAndInfo(message.Content, out filelength, out filecontent, out filename);
+                        LogUtil.GetLog().Write(GlobalVal.currentDir + "\\res\\" + filename);
+                        FileStream fs = new FileStream(GlobalVal.currentDir + "\\res\\" + filename, FileMode.OpenOrCreate, FileAccess.Write);
+                        fs.Write(filecontent, 0, filecontent.Length);
+                        fs.Close();
                     }
                     else
                     {
@@ -156,6 +167,41 @@ namespace 远程通信控制系统
                                 stream.Write(buff, 0, buff.Length);
                                 toolStripStatusLabel.Text = username + "注册并登录成功！";
                                 break;
+                            case "5": // 确认是否同意上传文件
+                                DialogResult ret = MessageBox.Show("确认接收客户端文件：" + obj["filename"], "确认", MessageBoxButtons.OKCancel);
+                                if (ret == DialogResult.OK)
+                                {
+                                    byte[] buff2 = Common.convertMessageToByte(MessageStr.getRetMessageWithCmd(5, true, ""));
+                                    stream.Write(buff2, 0, buff2.Length);
+                                }
+                                else
+                                {
+                                    byte[] buff2 = Common.convertMessageToByte(MessageStr.getRetMessageWithCmd(5, false, ""));
+                                    stream.Write(buff2, 0, buff2.Length);
+                                }
+                                break;
+                            case "6":
+                                Image baseImage = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+                                Graphics g = Graphics.FromImage(baseImage);
+                                g.CopyFromScreen(new Point(0, 0), new Point(0, 0), Screen.AllScreens[0].Bounds.Size);
+                                g.Dispose();
+                                baseImage.Save("tmp\\sc.png", ImageFormat.Png);
+                                FileStream fileStream = new FileStream("tmp\\sc.png", FileMode.Open, FileAccess.Read);
+                                BinaryReader read = new BinaryReader(fileStream);
+                                long length = read.BaseStream.Length;
+                                // 获取文件字节数组
+                                byte[] temp = new byte[length];
+                                for (int i = 0; i < read.BaseStream.Length; i++)
+                                {
+                                    temp[i] = read.ReadByte();
+                                }
+                                read.Close();
+                                fileStream.Close();
+                                byte[] buff3 = Common.convertMessageToByte(MessageFile.getFileMessage("sc.png", temp));
+                                stream.Write(buff3, 0, buff3.Length);
+                                break;
+                            case "7":
+                                break;
                         }
                     }
                 }
@@ -163,7 +209,7 @@ namespace 远程通信控制系统
             catch (Exception ex)
             {
                 LogUtil.GetLog().Write("服务器监听出错", ex);
-                MessageBox.Show("服务器监听出错！");
+                //MessageBox.Show("服务器监听出错！");
                 toolStripStatusLabel.Text = "服务器监听出错！";
             }
             goto loop;
@@ -181,6 +227,64 @@ namespace 远程通信控制系统
                 this.richTextBoxMessages.AppendText(text + Environment.NewLine);
                 this.richTextBoxMessages.ScrollToCaret();
             }
+        }
+
+        private void setImg(Image img)
+        {
+            if(this.pictureBox.InvokeRequired)
+            {
+                Action<Image> d = setImg;
+                this.pictureBox.Invoke(d, img);
+            }
+            else
+            {
+                this.pictureBox.Image = img;
+            }
+        }
+
+        private Bitmap GetThumbnail(Image b, int destHeight, int destWidth)
+        {
+            Image imgSource = b;
+            ImageFormat thisFormat = imgSource.RawFormat;
+            int sW = 0, sH = 0;
+            // 按比例缩放           
+            int sWidth = imgSource.Width;
+            int sHeight = imgSource.Height;
+            if (sHeight > destHeight || sWidth > destWidth)
+            {
+                if ((sWidth * destHeight) > (sHeight * destWidth))
+                {
+                    sW = destWidth;
+                    sH = (destWidth * sHeight) / sWidth;
+                }
+                else
+                {
+                    sH = destHeight;
+                    sW = (sWidth * destHeight) / sHeight;
+                }
+            }
+            else
+            {
+                sW = sWidth;
+                sH = sHeight;
+            }
+            Bitmap outBmp = new Bitmap(destWidth, destHeight);
+            Graphics g = Graphics.FromImage(outBmp);
+            g.Clear(Color.Transparent);
+            // 设置画布的描绘质量         
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.DrawImage(imgSource, new Rectangle((destWidth - sW) / 2, (destHeight - sH) / 2, sW, sH), 0, 0, imgSource.Width, imgSource.Height, GraphicsUnit.Pixel);
+            g.Dispose();
+            // 以下代码为保存图片时，设置压缩质量     
+            EncoderParameters encoderParams = new EncoderParameters();
+            long[] quality = new long[1];
+            quality[0] = 100;
+            EncoderParameter encoderParam = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
+            encoderParams.Param[0] = encoderParam;
+            imgSource.Dispose();
+            return outBmp;
         }
 
         private void 登录ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -204,17 +308,51 @@ namespace 远程通信控制系统
                                 try
                                 {
                                     message = Common.GetMessage(client.stream);
-                                    if(message.IsFile)
+                                    if (message.IsFile)
                                     {
-
+                                        int filelength;
+                                        byte[] filecontent;
+                                        string filename;
+                                        MessageFile.getFileAndInfo(message.Content, out filelength, out filecontent, out filename);
+                                        if (filename == "sc.png")
+                                        {
+                                            Image img = Image.FromStream(new MemoryStream(filecontent));
+                                            setImg(GetThumbnail(img, this.pictureBox.Height, this.pictureBox.Width));
+                                        }
                                     }
                                     else
                                     {
                                         string content = Encoding.UTF8.GetString(message.Content);
                                         JObject obj = JObject.Parse(content);
-                                        if (obj["cmd"].ToString()=="3")//Talk
+                                        if (obj["cmd"].ToString() == "3")//Talk
                                         {
                                             setText(obj["msg"].ToString());
+                                        }
+                                        else if (obj["cmd"].ToString() == "5")
+                                        {
+                                            if ((bool)obj["isSuccess"])
+                                            {
+                                                FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                                                BinaryReader read = new BinaryReader(fileStream);
+                                                long length = read.BaseStream.Length;
+                                                // 获取文件字节数组
+                                                byte[] temp = new byte[length];
+                                                for (int i = 0; i<read.BaseStream.Length; i++)
+                                                {
+                                                    temp[i] = read.ReadByte();
+                                                }
+                                                read.Close();
+                                                fileStream.Close();
+                                                byte[] buff1 = Common.convertMessageToByte(MessageFile.getFileMessage(fileName.Substring(fileName.LastIndexOf('\\') + 1), temp));
+                                                client.stream.Write(buff1, 0, buff1.Length);
+                                                MessageBox.Show("文件已传输！");
+                                                return;
+                                            }
+                                            else
+                                            {
+                                                MessageBox.Show("服务器拒绝了您的请求！");
+                                                return;
+                                            }
                                         }
                                     }
                                 }
@@ -267,7 +405,7 @@ namespace 远程通信控制系统
                                     {
                                         string content = Encoding.UTF8.GetString(message.Content);
                                         JObject obj = JObject.Parse(content);
-                                        switch(obj["cmd"].ToString())
+                                        switch (obj["cmd"].ToString())
                                         {
                                             case "3":// Talk
                                                 setText(obj["msg"].ToString());
@@ -297,7 +435,12 @@ namespace 远程通信控制系统
 
         private void buttonSendFile_Click(object sender, EventArgs e)
         {
-            if(GlobalVal.isService)
+            if (!GlobalVal.isLogin)
+            {
+                MessageBox.Show("请先登录！");
+                return;
+            }
+            if (GlobalVal.isService)
             {
 
             }
@@ -306,12 +449,81 @@ namespace 远程通信控制系统
                 OpenFileDialog fileDialog = new OpenFileDialog();
                 fileDialog.Multiselect = false;
                 fileDialog.Title = "文件选择";
-                if(fileDialog.ShowDialog() == DialogResult.OK)
+                if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    string fileName = fileDialog.FileName;// 获取文件路径
-                    MessageBox.Show(fileName);
+                    fileName = fileDialog.FileName;// 获取文件路径
+                    Client client = TcpCommon.getClient();
+                    try
+                    {
+                        client.Connect();
+                        JObject obj = new JObject(new JProperty("cmd", 5), new JProperty("filename", fileName.Substring(fileName.LastIndexOf('\\') + 1)));
+                        byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
+                        client.stream.Write(buff, 0, buff.Length);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtil.GetLog().Write(ex);
+                        MessageBox.Show("运行出错！");
+                    }
                 }
             }
         }
+
+        private void buttonPrtSc_Click(object sender, EventArgs e)
+        {
+            if (!GlobalVal.isLogin)
+            {
+                MessageBox.Show("请先登录！");
+                return;
+            }
+            if (GlobalVal.isService)
+            {
+                return;
+            }
+            else
+            {
+                Client client = TcpCommon.getClient();
+                try
+                {
+                    client.Connect();
+                    JObject obj = new JObject(new JProperty("cmd", (int)MessageStr.CmdType.sc));
+                    byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
+                    client.stream.Write(buff, 0, buff.Length);
+                }
+                catch (Exception ex)
+                {
+                    LogUtil.GetLog().Write(ex);
+                    MessageBox.Show("运行出错！");
+                }
+            }
+        }
+
+        private void buttonCmd_Click(object sender, EventArgs e)
+        {
+            if (!GlobalVal.isLogin)
+            {
+                MessageBox.Show("请先登录！");
+                return;
+            }
+            if (GlobalVal.isService)
+            {
+                return;
+            }
+            else
+            {
+                Client client = TcpCommon.getClient();
+                try
+                {
+                    client.Connect();
+                    JObject obj = new JObject(new JProperty("cmd", (int)MessageStr.CmdType.Cmd), new JProperty("content", textBoxCmd.Text));
+                    byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
+                    client.stream.Write(buff, 0, buff.Length);
+                }
+                catch (Exception ex)
+                {
+                    LogUtil.GetLog().Write(ex);
+                    MessageBox.Show("运行出错！");
+                }
+            }
     }
 }

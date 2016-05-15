@@ -115,7 +115,7 @@ namespace 远程通信控制系统
         {
             try
             {
-                if (client==null)
+                if (client == null)
                 {
                     client = new TcpClient();
                 }
@@ -171,7 +171,10 @@ namespace 远程通信控制系统
 
             Message message = Message.getInstance(isFile, length);
             byte[] content = new byte[length];
-            stream.Read(content, 0, length);
+            for(int i=0;i<length;i++)
+            {
+                content[i] = (byte)stream.ReadByte();
+            }
             message.Content = content;
             return message;
         }
@@ -310,7 +313,10 @@ namespace 远程通信控制系统
             Login = 1,
             Logout = 2,
             Talk = 3,
-            Regist = 4
+            Regist = 4,
+            FileConfirm = 5,
+            sc = 6,
+            Cmd = 7
         }
 
         public MessageStr(bool isFile, int length) : base(isFile, length) { }
@@ -327,6 +333,23 @@ namespace 远程通信控制系统
         {
             JObject obj = new JObject(new JProperty("isSuccess", isSuccess), new JProperty("msg", msg));
             byte[] buff = Encoding.UTF8.GetBytes(obj.ToString());
+            MessageStr message = new MessageStr(false, buff.Length);
+            message.Content = buff;
+            return message;
+        }
+
+        public static MessageStr getRetMessageWithCmd(int cmd, bool isSuccess, string msg)
+        {
+            JObject obj = new JObject(new JProperty("cmd", cmd), new JProperty("isSuccess", isSuccess), new JProperty("msg", msg));
+            byte[] buff = Encoding.UTF8.GetBytes(obj.ToString());
+            MessageStr message = new MessageStr(false, buff.Length);
+            message.Content = buff;
+            return message;
+        }
+
+        public static MessageStr getCommMessage(string json)
+        {
+            byte[] buff = Encoding.UTF8.GetBytes(json);
             MessageStr message = new MessageStr(false, buff.Length);
             message.Content = buff;
             return message;
@@ -360,21 +383,50 @@ namespace 远程通信控制系统
     /// </summary>
     public class MessageFile : Message
     {
-        // 文件内容
-        private byte[] content;
+        //// 文件内容
+        //private byte[] content;
 
-        // 文件正文长度
-        private int fileLength;
+        //// 文件正文长度
+        //private int fileLength;
 
-        public int FileLength
-        {
-            get
-            {
-                fileLength = Common.getInt(content[0], content[1], content[2], content[3]);
-                return fileLength;
-            }
-        }
+        //public int FileLength
+        //{
+        //    get
+        //    {
+        //        return fileLength;
+        //    }
+        //}
 
         public MessageFile(bool isFile, int length) : base(isFile, length) { }
+
+        public static MessageFile getFileMessage(string filename, byte[] filecontent)
+        {
+            byte[] fname = Encoding.UTF8.GetBytes(filename);
+            byte[] content = new byte[4 + filecontent.Length + fname.Length];
+            byte[] filelength = Common.getByte(filecontent.Length);
+            Common.copyByteArray(filelength, content, 0, 4);
+            Common.copyByteArray(filecontent, content, 4, filecontent.Length);
+            Common.copyByteArray(fname, content, 4 + filecontent.Length, fname.Length);
+            MessageFile msg = new MessageFile(true, content.Length);
+            msg.Content = content;
+            return msg;
+        }
+
+        public static void getFileAndInfo(byte[] content, out int length, out byte[] filecontent, out string filename)
+        {
+            length = Common.getInt(content[0], content[1], content[2], content[3]);
+            filecontent = new byte[length];
+            for (int i = 0; i < length; i++)
+            {
+                filecontent[i] = content[i + 4];
+            }
+            int filenamelength = content.Length - 4 - length;
+            byte[] bfilename = new byte[filenamelength];
+            for (int i = 0; i < filenamelength; i++)
+            {
+                bfilename[i] = content[4 + length + i];
+            }
+            filename = Encoding.UTF8.GetString(bfilename);
+        }
     }
 }

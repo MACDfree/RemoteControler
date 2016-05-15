@@ -15,5 +15,6 @@ namespace 远程通信控制系统
         public static bool isService;
         public static bool isLogin;
         public static string username;
+        public static string currentDir;
     }
 }

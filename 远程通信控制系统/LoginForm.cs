@@ -83,6 +83,7 @@ namespace 远程通信控制系统
                                 MessageBox.Show("登陆成功！");
                                 GlobalVal.username = textBoxUsername.Text;
                                 GlobalVal.isLogin = true;
+                                this.Close();
                                 return;
                             }
                             else

@@ -16,6 +16,14 @@ namespace 远程通信控制系统
         static void Main()
         {
             GlobalVal.currentDir = Application.StartupPath;
+            if(!Directory.Exists(GlobalVal.currentDir+"\\tmp"))
+            {
+                Directory.CreateDirectory(GlobalVal.currentDir + "\\tmp");
+            }
+            if (!Directory.Exists(GlobalVal.currentDir + "\\res"))
+            {
+                Directory.CreateDirectory(GlobalVal.currentDir + "\\res");
+            }
             if (!File.Exists(Application.StartupPath + "/config.ini"))
             {
                 IniUtil.Write("common", "serviceport", "1314");

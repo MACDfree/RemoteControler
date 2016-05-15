@@ -22,11 +22,6 @@ namespace 远程通信控制系统
             InitializeComponent();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            comboBoxCmd.Items.Add("shutdown");
-        }
-
         private void buttonSend_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrWhiteSpace(richTextBoxSend.Text))
@@ -141,12 +136,23 @@ namespace 远程通信控制系统
                                 {
                                     username = obj["username"].ToString();
                                     password = obj["password"].ToString();
-                                    // TODO 数据库操作
-                                    byte[] buff1 = Common.convertMessageToByte(MessageStr.getRetMessage(true, ""));
-                                    stream.Write(buff1, 0, buff1.Length);
-                                    GlobalVal.isLogin = true;
-                                    GlobalVal.username = username;
-                                    toolStripStatusLabel.Text = username + "登录成功！";
+                                    CommonDao dao = new CommonDao();
+                                    String cnt = dao.GetStr("select count(1) from userinfo where username='{0}' and password='{1}'", username, password);
+                                    if (cnt == "0")
+                                    {
+                                        byte[] buff1 = Common.convertMessageToByte(MessageStr.getRetMessage(false, "用户未注册，请先注册！"));
+                                        GlobalVal.isLogin = false;
+                                        stream.Write(buff1, 0, buff1.Length);
+                                        toolStripStatusLabel.Text = username + "未注册！";
+                                    }
+                                    else
+                                    {
+                                        byte[] buff1 = Common.convertMessageToByte(MessageStr.getRetMessage(true, ""));
+                                        stream.Write(buff1, 0, buff1.Length);
+                                        GlobalVal.isLogin = true;
+                                        GlobalVal.username = username;
+                                        toolStripStatusLabel.Text = username + "登录成功！";
+                                    }
                                 }
                                 break;
                             case "2": //Logout
@@ -161,11 +167,22 @@ namespace 远程通信控制系统
                             case "4": //Regist
                                 username = obj["username"].ToString();
                                 password = obj["password"].ToString();
-                                // TODO 增加数据库操作
-                                byte[] buff = Common.convertMessageToByte(MessageStr.getRetMessage(true, ""));
-                                GlobalVal.isLogin = true;
-                                stream.Write(buff, 0, buff.Length);
-                                toolStripStatusLabel.Text = username + "注册并登录成功！";
+                                CommonDao dao4 = new CommonDao();
+                                String cnt4 = dao4.GetStr("select count(1) from userinfo where username='{0}'", username);
+                                if (cnt4 != "0")
+                                {
+                                    byte[] buff4 = Common.convertMessageToByte(MessageStr.getRetMessage(false, "用户已注册！"));
+                                    GlobalVal.isLogin = false;
+                                    stream.Write(buff4, 0, buff4.Length);
+                                    toolStripStatusLabel.Text = username + "已注册！";
+                                }
+                                else
+                                {
+                                    dao4.Execute("insert into userinfo ([userguid],[loginid],[username],[password],[serverorclient],[ipaddress]) values ('{0}','{1}','{2}','{3}','{4}','{5}')", Guid.NewGuid().ToString(), username, username, password, "1", "0");
+                                    byte[] buff = Common.convertMessageToByte(MessageStr.getRetMessage(true, ""));
+                                    stream.Write(buff, 0, buff.Length);
+                                    toolStripStatusLabel.Text = username + "注册成功！";
+                                }
                                 break;
                             case "5": // 确认是否同意上传文件
                                 DialogResult ret = MessageBox.Show("确认接收客户端文件：" + obj["filename"], "确认", MessageBoxButtons.OKCancel);
@@ -191,18 +208,17 @@ namespace 远程通信控制系统
                                             Graphics g = Graphics.FromImage(baseImage);
                                             g.CopyFromScreen(new Point(0, 0), new Point(0, 0), Screen.AllScreens[0].Bounds.Size);
                                             g.Dispose();
-                                            baseImage.Save("tmp\\sc.png", ImageFormat.Png);
-                                            FileStream fileStream = new FileStream("tmp\\sc.png", FileMode.Open, FileAccess.Read);
-                                            BinaryReader read = new BinaryReader(fileStream);
-                                            long length = read.BaseStream.Length;
-                                            // 获取文件字节数组
-                                            byte[] temp = new byte[length];
-                                            for (int i = 0; i < read.BaseStream.Length; i++)
-                                            {
-                                                temp[i] = read.ReadByte();
-                                            }
-                                            read.Close();
-                                            fileStream.Close();
+                                            MemoryStream ms = new MemoryStream();
+                                            baseImage.Save(ms, ImageFormat.Png);
+                                            //baseImage.Save("tmp\\sc.png", ImageFormat.Png);
+                                            //FileStream fileStream = new FileStream("tmp\\sc.png", FileMode.Open, FileAccess.Read);
+                                            //BinaryReader read = new BinaryReader(fileStream);
+                                            long length = ms.Length;
+                                            //// 获取文件字节数组
+                                            byte[] temp = ms.GetBuffer();
+                                            //read.Close();
+                                            //fileStream.Close();
+                                            ms.Dispose();
                                             byte[] buff3 = Common.convertMessageToByte(MessageFile.getFileMessage("sc.png", temp));
                                             stream.Write(buff3, 0, buff3.Length);
                                             Thread.Sleep(90);
@@ -234,8 +250,8 @@ namespace 远程通信控制系统
                                 string output = p.StandardOutput.ReadToEnd();
                                 p.WaitForExit();//等待程序执行完退出进程
                                 p.Close();
-                                byte[] buff4 = Common.convertMessageToByte(MessageStr.getRetMessageWithCmd(7, true, output));
-                                stream.Write(buff4, 0, buff4.Length);
+                                byte[] buff7 = Common.convertMessageToByte(MessageStr.getRetMessageWithCmd(7, true, output));
+                                stream.Write(buff7, 0, buff7.Length);
                                 break;
                         }
                     }
@@ -524,6 +540,11 @@ namespace 远程通信控制系统
                     MessageBox.Show("运行出错！");
                 }
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            comboBoxCmd.Items.Add("shutdown");
         }
     }
 }

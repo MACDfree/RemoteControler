@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data.OleDb;
 
-namespace 远程通信控制系统.Utiles
+namespace 远程通信控制系统
 {
     sealed class CommonDao
     {
@@ -15,7 +15,8 @@ namespace 远程通信控制系统.Utiles
 
         public CommonDao()
         {
-            this.connStr = IniUtil.Read("DB", "connStr");
+            this.connStr = IniUtil.Read("db", "connStr");
+            LogUtil.GetLog().Write(connStr);
         }
 
         public List<IDictionary<string, Object>> GetList(string sql, params string[] args)
@@ -23,7 +24,8 @@ namespace 远程通信控制系统.Utiles
             List<IDictionary<string, Object>> list = new List<IDictionary<string, object>>();
             using (OleDbConnection conn = new OleDbConnection(this.connStr))
             {
-
+                conn.Open();
+                LogUtil.GetLog().Write(String.Format(sql, args));
                 OleDbCommand cmd = new OleDbCommand(String.Format(sql, args), conn);
                 OleDbDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -43,6 +45,8 @@ namespace 远程通信控制系统.Utiles
             String ret = "";
             using (OleDbConnection conn = new OleDbConnection(this.connStr))
             {
+                conn.Open();
+                LogUtil.GetLog().Write(String.Format(sql, args));
                 OleDbCommand cmd = new OleDbCommand(String.Format(sql, args), conn);
                 object obj = cmd.ExecuteScalar();
                 ret = obj.ToString();
@@ -55,6 +59,8 @@ namespace 远程通信控制系统.Utiles
             int count = 0;
             using (OleDbConnection conn = new OleDbConnection(this.connStr))
             {
+                conn.Open();
+                LogUtil.GetLog().Write(String.Format(sql, args));
                 OleDbCommand cmd = new OleDbCommand(String.Format(sql, args), conn);
                 count = cmd.ExecuteNonQuery();
             }

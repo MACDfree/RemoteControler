@@ -79,7 +79,6 @@ namespace 远程通信控制系统
                             {
                                 MessageBox.Show("注册成功！");
                                 GlobalVal.username = textBoxUsername.Text;
-                                GlobalVal.isLogin = true;
                                 return;
                             }
                             else

@@ -232,6 +232,7 @@
             this.MainMenuStrip = this.menuStripTool;
             this.Name = "MainForm";
             this.Text = "远程通信控制系统";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.menuStripTool.ResumeLayout(false);

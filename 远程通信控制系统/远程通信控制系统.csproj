@@ -125,6 +125,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="connect.ico" />
+    <Content Include="user.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="www.ico.la_e65fab431a68e3559eac28e30efac58b_256X256.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

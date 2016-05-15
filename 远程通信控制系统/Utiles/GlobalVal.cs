@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace 远程通信控制系统
+﻿namespace 远程通信控制系统
 {
     public static class GlobalVal
     {
@@ -16,5 +9,6 @@ namespace 远程通信控制系统
         public static bool isLogin;
         public static string username;
         public static string currentDir;
+        public static bool isMonitor;
     }
 }

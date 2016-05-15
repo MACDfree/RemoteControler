@@ -284,6 +284,10 @@ namespace 远程通信控制系统
                                 WinApi.mouse_event(WinApi.MouseEventFlag.RightDown | WinApi.MouseEventFlag.RightUp, 0, 0, 0, UIntPtr.Zero);
                                 WinApi.mouse_event(WinApi.MouseEventFlag.RightDown | WinApi.MouseEventFlag.RightUp, 0, 0, 0, UIntPtr.Zero);
                                 break;
+                            case "12": // K1
+                                string keydata = obj["key"].ToString();
+                                SendKeys.Send(keydata);
+                                break;
                         }
                     }
                 }
@@ -658,33 +662,46 @@ namespace 远程通信控制系统
             }
         }
 
-        private void pictureBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void buttonMB_Click(object sender, EventArgs e)
         {
-            
-            //if (!GlobalVal.isLogin)
-            //{
-            //    return;
-            //}
-            //if (GlobalVal.isService)
-            //{
-            //    return;
-            //}
-            //else
-            //{
-            //    Client client = TcpCommon.getClient();
-            //    try
-            //    {
-            //        client.Connect();
-            //        JObject obj = new JObject(new JProperty("cmd", (int)MessageStr.CmdType.K1), new JProperty("key", e.), new JProperty("y", e.Y));
-            //        byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
-            //        client.stream.Write(buff, 0, buff.Length);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        LogUtil.GetLog().Write(ex);
-            //        MessageBox.Show("运行出错！");
-            //    }
-            //}
+            GlobalVal.isMonitor = !GlobalVal.isMonitor;
+            if(GlobalVal.isMonitor)
+            {
+                this.buttonMB.Text = "关闭键盘监控";
+            }
+            else
+            {
+                this.buttonMB.Text = "开启键盘监控";
+            }
+            this.KeyPreview = GlobalVal.isMonitor;
+        }
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (!GlobalVal.isLogin)
+            {
+                return;
+            }
+            if (GlobalVal.isService)
+            {
+                return;
+            }
+            else
+            {
+                Client client = TcpCommon.getClient();
+                try
+                {
+                    client.Connect();
+                    JObject obj = new JObject(new JProperty("cmd", (int)MessageStr.CmdType.K1), new JProperty("key", e.KeyData.ToString()));
+                    byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
+                    client.stream.Write(buff, 0, buff.Length);
+                }
+                catch (Exception ex)
+                {
+                    LogUtil.GetLog().Write(ex);
+                    MessageBox.Show("运行出错！");
+                }
+            }
         }
     }
 }

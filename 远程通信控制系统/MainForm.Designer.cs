@@ -139,8 +139,9 @@
             this.buttonMB.Name = "buttonMB";
             this.buttonMB.Size = new System.Drawing.Size(86, 23);
             this.buttonMB.TabIndex = 5;
-            this.buttonMB.Text = "鼠标/键盘";
+            this.buttonMB.Text = "开启键盘监控";
             this.buttonMB.UseVisualStyleBackColor = true;
+            this.buttonMB.Click += new System.EventHandler(this.buttonMB_Click);
             // 
             // menuStripTool
             // 
@@ -247,6 +248,7 @@
             this.Name = "MainForm";
             this.Text = "远程通信控制系统";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyUp);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.menuStripTool.ResumeLayout(false);

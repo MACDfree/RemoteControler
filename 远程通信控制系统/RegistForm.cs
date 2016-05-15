@@ -1,13 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace 远程通信控制系统
@@ -45,6 +40,11 @@ namespace 远程通信控制系统
             if (textBoxPassword.Text != textBoxConfirm.Text)
             {
                 MessageBox.Show("密码不一致，请修改！");
+                return;
+            }
+            if (!Regex.IsMatch(textBoxUsername.Text, @"^[^0-9][\S]*$"))
+            {
+                MessageBox.Show("用户名不能以数字开头！");
                 return;
             }
             #endregion

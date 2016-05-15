@@ -64,6 +64,10 @@ namespace 远程通信控制系统
                 }
                 richTextBoxSend.Text = "";
             }
+            else
+            {
+                MessageBox.Show("请先登录！");
+            }
         }
 
         private void ShowFormCenter(Form form, Form parentForm)
@@ -117,6 +121,7 @@ namespace 远程通信控制系统
                         FileStream fs = new FileStream(GlobalVal.currentDir + "\\res\\" + filename, FileMode.OpenOrCreate, FileAccess.Write);
                         fs.Write(filecontent, 0, filecontent.Length);
                         fs.Close();
+                        toolStripStatusLabel.Text = filename + "上传成功！";
                     }
                     else
                     {
@@ -221,7 +226,7 @@ namespace 远程通信控制系统
                                             ms.Dispose();
                                             byte[] buff3 = Common.convertMessageToByte(MessageFile.getFileMessage("sc.png", temp));
                                             stream.Write(buff3, 0, buff3.Length);
-                                            Thread.Sleep(90);
+                                            Thread.Sleep(50);
                                         }
                                     }
                                     catch (Exception ex)
@@ -252,6 +257,32 @@ namespace 远程通信控制系统
                                 p.Close();
                                 byte[] buff7 = Common.convertMessageToByte(MessageStr.getRetMessageWithCmd(7, true, output));
                                 stream.Write(buff7, 0, buff7.Length);
+                                break;
+                            case "8": //MLeft1
+                                int x = int.Parse(obj["x"].ToString());
+                                int y = int.Parse(obj["y"].ToString());
+                                WinApi.SetCursorPos(x, y);
+                                WinApi.mouse_event(WinApi.MouseEventFlag.LeftDown | WinApi.MouseEventFlag.LeftUp, 0, 0, 0, UIntPtr.Zero);
+                                break;
+                            case "10": //MRight1
+                                x = int.Parse(obj["x"].ToString());
+                                y = int.Parse(obj["y"].ToString());
+                                WinApi.SetCursorPos(x, y);
+                                WinApi.mouse_event(WinApi.MouseEventFlag.RightDown | WinApi.MouseEventFlag.RightUp, 0, 0, 0, UIntPtr.Zero);
+                                break;
+                            case "9": //MLeft2
+                                x = int.Parse(obj["x"].ToString());
+                                y = int.Parse(obj["y"].ToString());
+                                WinApi.SetCursorPos(x, y);
+                                WinApi.mouse_event(WinApi.MouseEventFlag.LeftDown | WinApi.MouseEventFlag.LeftUp, 0, 0, 0, UIntPtr.Zero);
+                                WinApi.mouse_event(WinApi.MouseEventFlag.LeftDown | WinApi.MouseEventFlag.LeftUp, 0, 0, 0, UIntPtr.Zero);
+                                break;
+                            case "11": //MRight2
+                                x = int.Parse(obj["x"].ToString());
+                                y = int.Parse(obj["y"].ToString());
+                                WinApi.SetCursorPos(x, y);
+                                WinApi.mouse_event(WinApi.MouseEventFlag.RightDown | WinApi.MouseEventFlag.RightUp, 0, 0, 0, UIntPtr.Zero);
+                                WinApi.mouse_event(WinApi.MouseEventFlag.RightDown | WinApi.MouseEventFlag.RightUp, 0, 0, 0, UIntPtr.Zero);
                                 break;
                         }
                     }
@@ -374,7 +405,8 @@ namespace 远程通信控制系统
                                         if (filename == "sc.png")
                                         {
                                             Image img = Image.FromStream(new MemoryStream(filecontent));
-                                            setImg(GetThumbnail(img, this.pictureBox.Height, this.pictureBox.Width));
+                                            //setImg(GetThumbnail(img, this.pictureBox.Height, this.pictureBox.Width));
+                                            setImg(img);
                                         }
                                     }
                                     else
@@ -457,7 +489,7 @@ namespace 远程通信控制系统
             }
             if (GlobalVal.isService)
             {
-
+                return;
             }
             else
             {
@@ -545,6 +577,114 @@ namespace 远程通信控制系统
         private void MainForm_Load(object sender, EventArgs e)
         {
             comboBoxCmd.Items.Add("shutdown");
+        }
+
+        /// <summary>
+        /// 鼠标单击处理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pictureBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (!GlobalVal.isLogin)
+            {
+                return;
+            }
+            if (GlobalVal.isService)
+            {
+                return;
+            }
+            else
+            {
+                Client client = TcpCommon.getClient();
+                try
+                {
+                    client.Connect();
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        JObject obj = new JObject(new JProperty("cmd", (int)MessageStr.CmdType.MLeft1), new JProperty("x", e.X), new JProperty("y", e.Y));
+                        byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
+                        client.stream.Write(buff, 0, buff.Length);
+                    }
+                    else if (e.Button == MouseButtons.Right)
+                    {
+                        JObject obj = new JObject(new JProperty("cmd", (int)MessageStr.CmdType.MRight1), new JProperty("x", e.X), new JProperty("y", e.Y));
+                        byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
+                        client.stream.Write(buff, 0, buff.Length);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogUtil.GetLog().Write(ex);
+                    MessageBox.Show("运行出错！");
+                }
+            }
+        }
+
+        private void pictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (!GlobalVal.isLogin)
+            {
+                return;
+            }
+            if (GlobalVal.isService)
+            {
+                return;
+            }
+            else
+            {
+                Client client = TcpCommon.getClient();
+                try
+                {
+                    client.Connect();
+                    if (e.Button == MouseButtons.Left)
+                    {
+                        JObject obj = new JObject(new JProperty("cmd", (int)MessageStr.CmdType.MLeft2), new JProperty("x", e.X), new JProperty("y", e.Y));
+                        byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
+                        client.stream.Write(buff, 0, buff.Length);
+                    }
+                    else if (e.Button == MouseButtons.Right)
+                    {
+                        JObject obj = new JObject(new JProperty("cmd", (int)MessageStr.CmdType.MRight2), new JProperty("x", e.X), new JProperty("y", e.Y));
+                        byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
+                        client.stream.Write(buff, 0, buff.Length);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogUtil.GetLog().Write(ex);
+                    MessageBox.Show("运行出错！");
+                }
+            }
+        }
+
+        private void pictureBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            
+            //if (!GlobalVal.isLogin)
+            //{
+            //    return;
+            //}
+            //if (GlobalVal.isService)
+            //{
+            //    return;
+            //}
+            //else
+            //{
+            //    Client client = TcpCommon.getClient();
+            //    try
+            //    {
+            //        client.Connect();
+            //        JObject obj = new JObject(new JProperty("cmd", (int)MessageStr.CmdType.K1), new JProperty("key", e.), new JProperty("y", e.Y));
+            //        byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
+            //        client.stream.Write(buff, 0, buff.Length);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        LogUtil.GetLog().Write(ex);
+            //        MessageBox.Show("运行出错！");
+            //    }
+            //}
         }
     }
 }

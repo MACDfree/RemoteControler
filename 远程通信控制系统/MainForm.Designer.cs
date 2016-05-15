@@ -46,9 +46,11 @@
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.buttonCmd = new System.Windows.Forms.Button();
             this.comboBoxCmd = new System.Windows.Forms.ComboBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.statusStrip.SuspendLayout();
             this.menuStripTool.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -183,14 +185,14 @@
             // 
             // pictureBox
             // 
-            this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox.Location = new System.Drawing.Point(476, 28);
+            this.pictureBox.Location = new System.Drawing.Point(3, 3);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(558, 365);
+            this.pictureBox.Size = new System.Drawing.Size(490, 299);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox.TabIndex = 7;
             this.pictureBox.TabStop = false;
+            this.pictureBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseClick);
+            this.pictureBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDoubleClick);
             // 
             // buttonCmd
             // 
@@ -212,14 +214,26 @@
             this.comboBoxCmd.Size = new System.Drawing.Size(207, 20);
             this.comboBoxCmd.TabIndex = 10;
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.pictureBox);
+            this.panel1.Location = new System.Drawing.Point(476, 28);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(558, 365);
+            this.panel1.TabIndex = 11;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1034, 458);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.comboBoxCmd);
             this.Controls.Add(this.buttonCmd);
-            this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.buttonMB);
             this.Controls.Add(this.buttonPrtSc);
             this.Controls.Add(this.buttonSendFile);
@@ -238,6 +252,8 @@
             this.menuStripTool.ResumeLayout(false);
             this.menuStripTool.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -261,6 +277,7 @@
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Button buttonCmd;
         private System.Windows.Forms.ComboBox comboBoxCmd;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

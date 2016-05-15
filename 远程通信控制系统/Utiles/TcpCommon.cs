@@ -316,7 +316,12 @@ namespace 远程通信控制系统
             Regist = 4,
             FileConfirm = 5,
             sc = 6,
-            Cmd = 7
+            Cmd = 7,
+            MLeft1 = 8,//鼠标左单击
+            MLeft2 = 9,//鼠标左双击
+            MRight1 = 10,//鼠标右单击
+            MRight2 = 11,//鼠标左双击
+            K1 = 12//键盘值
         }
 
         public MessageStr(bool isFile, int length) : base(isFile, length) { }

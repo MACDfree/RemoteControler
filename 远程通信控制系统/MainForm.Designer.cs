@@ -35,9 +35,6 @@
             this.richTextBoxMessages = new System.Windows.Forms.RichTextBox();
             this.richTextBoxSend = new System.Windows.Forms.RichTextBox();
             this.buttonSend = new System.Windows.Forms.Button();
-            this.buttonSendFile = new System.Windows.Forms.Button();
-            this.buttonPrtSc = new System.Windows.Forms.Button();
-            this.buttonMB = new System.Windows.Forms.Button();
             this.menuStripTool = new System.Windows.Forms.MenuStrip();
             this.设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.启动项配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,10 +44,21 @@
             this.buttonCmd = new System.Windows.Forms.Button();
             this.comboBoxCmd = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.tabControlMain = new System.Windows.Forms.TabControl();
+            this.tabPageMain = new System.Windows.Forms.TabPage();
+            this.tabPageSc = new System.Windows.Forms.TabPage();
+            this.开启键盘监听ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.开始截图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.发送文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxCmdRet = new System.Windows.Forms.TextBox();
             this.statusStrip.SuspendLayout();
             this.menuStripTool.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.panel1.SuspendLayout();
+            this.tabControlMain.SuspendLayout();
+            this.tabPageMain.SuspendLayout();
+            this.tabPageSc.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -58,10 +66,10 @@
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar,
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 436);
+            this.statusStrip.Location = new System.Drawing.Point(0, 588);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.statusStrip.Size = new System.Drawing.Size(1034, 22);
+            this.statusStrip.Size = new System.Drawing.Size(975, 22);
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 1;
             this.statusStrip.Text = "底部状态栏";
@@ -82,10 +90,12 @@
             // 
             this.richTextBoxMessages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.richTextBoxMessages.BackColor = System.Drawing.Color.White;
             this.richTextBoxMessages.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBoxMessages.Location = new System.Drawing.Point(0, 28);
+            this.richTextBoxMessages.Location = new System.Drawing.Point(0, 0);
             this.richTextBoxMessages.Name = "richTextBoxMessages";
-            this.richTextBoxMessages.Size = new System.Drawing.Size(470, 280);
+            this.richTextBoxMessages.ReadOnly = true;
+            this.richTextBoxMessages.Size = new System.Drawing.Size(590, 449);
             this.richTextBoxMessages.TabIndex = 2;
             this.richTextBoxMessages.Text = "";
             // 
@@ -93,16 +103,16 @@
             // 
             this.richTextBoxSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.richTextBoxSend.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBoxSend.Location = new System.Drawing.Point(0, 314);
+            this.richTextBoxSend.Location = new System.Drawing.Point(0, 455);
             this.richTextBoxSend.Name = "richTextBoxSend";
-            this.richTextBoxSend.Size = new System.Drawing.Size(385, 79);
+            this.richTextBoxSend.Size = new System.Drawing.Size(505, 79);
             this.richTextBoxSend.TabIndex = 3;
             this.richTextBoxSend.Text = "";
             // 
             // buttonSend
             // 
             this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonSend.Location = new System.Drawing.Point(391, 314);
+            this.buttonSend.Location = new System.Drawing.Point(511, 451);
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Size = new System.Drawing.Size(79, 79);
             this.buttonSend.TabIndex = 4;
@@ -110,46 +120,16 @@
             this.buttonSend.UseVisualStyleBackColor = true;
             this.buttonSend.Click += new System.EventHandler(this.buttonSend_Click);
             // 
-            // buttonSendFile
-            // 
-            this.buttonSendFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonSendFile.Location = new System.Drawing.Point(12, 399);
-            this.buttonSendFile.Name = "buttonSendFile";
-            this.buttonSendFile.Size = new System.Drawing.Size(75, 23);
-            this.buttonSendFile.TabIndex = 5;
-            this.buttonSendFile.Text = "发送文件";
-            this.buttonSendFile.UseVisualStyleBackColor = true;
-            this.buttonSendFile.Click += new System.EventHandler(this.buttonSendFile_Click);
-            // 
-            // buttonPrtSc
-            // 
-            this.buttonPrtSc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonPrtSc.Location = new System.Drawing.Point(93, 399);
-            this.buttonPrtSc.Name = "buttonPrtSc";
-            this.buttonPrtSc.Size = new System.Drawing.Size(75, 23);
-            this.buttonPrtSc.TabIndex = 5;
-            this.buttonPrtSc.Text = "截图";
-            this.buttonPrtSc.UseVisualStyleBackColor = true;
-            this.buttonPrtSc.Click += new System.EventHandler(this.buttonPrtSc_Click);
-            // 
-            // buttonMB
-            // 
-            this.buttonMB.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonMB.Location = new System.Drawing.Point(174, 399);
-            this.buttonMB.Name = "buttonMB";
-            this.buttonMB.Size = new System.Drawing.Size(86, 23);
-            this.buttonMB.TabIndex = 5;
-            this.buttonMB.Text = "开启键盘监控";
-            this.buttonMB.UseVisualStyleBackColor = true;
-            this.buttonMB.Click += new System.EventHandler(this.buttonMB_Click);
-            // 
             // menuStripTool
             // 
             this.menuStripTool.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.设置ToolStripMenuItem});
+            this.设置ToolStripMenuItem,
+            this.开启键盘监听ToolStripMenuItem,
+            this.开始截图ToolStripMenuItem,
+            this.发送文件ToolStripMenuItem});
             this.menuStripTool.Location = new System.Drawing.Point(0, 0);
             this.menuStripTool.Name = "menuStripTool";
-            this.menuStripTool.Size = new System.Drawing.Size(1034, 25);
+            this.menuStripTool.Size = new System.Drawing.Size(975, 25);
             this.menuStripTool.TabIndex = 6;
             this.menuStripTool.Text = "menuStrip1";
             // 
@@ -166,21 +146,21 @@
             // 启动项配置ToolStripMenuItem
             // 
             this.启动项配置ToolStripMenuItem.Name = "启动项配置ToolStripMenuItem";
-            this.启动项配置ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.启动项配置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.启动项配置ToolStripMenuItem.Text = "启动项配置";
             this.启动项配置ToolStripMenuItem.Click += new System.EventHandler(this.启动项配置ToolStripMenuItem_Click);
             // 
             // 登录ToolStripMenuItem
             // 
             this.登录ToolStripMenuItem.Name = "登录ToolStripMenuItem";
-            this.登录ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.登录ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.登录ToolStripMenuItem.Text = "登录";
             this.登录ToolStripMenuItem.Click += new System.EventHandler(this.登录ToolStripMenuItem_Click);
             // 
             // 注册ToolStripMenuItem
             // 
             this.注册ToolStripMenuItem.Name = "注册ToolStripMenuItem";
-            this.注册ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.注册ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.注册ToolStripMenuItem.Text = "注册";
             this.注册ToolStripMenuItem.Click += new System.EventHandler(this.注册ToolStripMenuItem_Click);
             // 
@@ -197,8 +177,7 @@
             // 
             // buttonCmd
             // 
-            this.buttonCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonCmd.Location = new System.Drawing.Point(508, 399);
+            this.buttonCmd.Location = new System.Drawing.Point(884, 7);
             this.buttonCmd.Name = "buttonCmd";
             this.buttonCmd.Size = new System.Drawing.Size(75, 23);
             this.buttonCmd.TabIndex = 8;
@@ -208,9 +187,8 @@
             // 
             // comboBoxCmd
             // 
-            this.comboBoxCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.comboBoxCmd.FormattingEnabled = true;
-            this.comboBoxCmd.Location = new System.Drawing.Point(295, 401);
+            this.comboBoxCmd.Location = new System.Drawing.Point(671, 9);
             this.comboBoxCmd.Name = "comboBoxCmd";
             this.comboBoxCmd.Size = new System.Drawing.Size(207, 20);
             this.comboBoxCmd.TabIndex = 10;
@@ -222,25 +200,100 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.pictureBox);
-            this.panel1.Location = new System.Drawing.Point(476, 28);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(558, 365);
+            this.panel1.Size = new System.Drawing.Size(967, 534);
             this.panel1.TabIndex = 11;
+            // 
+            // tabControlMain
+            // 
+            this.tabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControlMain.Controls.Add(this.tabPageMain);
+            this.tabControlMain.Controls.Add(this.tabPageSc);
+            this.tabControlMain.Location = new System.Drawing.Point(0, 29);
+            this.tabControlMain.Name = "tabControlMain";
+            this.tabControlMain.SelectedIndex = 0;
+            this.tabControlMain.Size = new System.Drawing.Size(975, 556);
+            this.tabControlMain.TabIndex = 12;
+            // 
+            // tabPageMain
+            // 
+            this.tabPageMain.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageMain.Controls.Add(this.textBoxCmdRet);
+            this.tabPageMain.Controls.Add(this.label1);
+            this.tabPageMain.Controls.Add(this.richTextBoxMessages);
+            this.tabPageMain.Controls.Add(this.richTextBoxSend);
+            this.tabPageMain.Controls.Add(this.buttonCmd);
+            this.tabPageMain.Controls.Add(this.comboBoxCmd);
+            this.tabPageMain.Controls.Add(this.buttonSend);
+            this.tabPageMain.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMain.Name = "tabPageMain";
+            this.tabPageMain.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageMain.Size = new System.Drawing.Size(967, 530);
+            this.tabPageMain.TabIndex = 0;
+            this.tabPageMain.Text = "主页";
+            // 
+            // tabPageSc
+            // 
+            this.tabPageSc.Controls.Add(this.panel1);
+            this.tabPageSc.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSc.Name = "tabPageSc";
+            this.tabPageSc.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSc.Size = new System.Drawing.Size(967, 530);
+            this.tabPageSc.TabIndex = 1;
+            this.tabPageSc.Text = "截图";
+            this.tabPageSc.UseVisualStyleBackColor = true;
+            // 
+            // 开启键盘监听ToolStripMenuItem
+            // 
+            this.开启键盘监听ToolStripMenuItem.Name = "开启键盘监听ToolStripMenuItem";
+            this.开启键盘监听ToolStripMenuItem.Size = new System.Drawing.Size(92, 21);
+            this.开启键盘监听ToolStripMenuItem.Text = "开启键盘监听";
+            this.开启键盘监听ToolStripMenuItem.Click += new System.EventHandler(this.开启键盘监听ToolStripMenuItem_Click);
+            // 
+            // 开始截图ToolStripMenuItem
+            // 
+            this.开始截图ToolStripMenuItem.Name = "开始截图ToolStripMenuItem";
+            this.开始截图ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.开始截图ToolStripMenuItem.Text = "开始截图";
+            this.开始截图ToolStripMenuItem.Click += new System.EventHandler(this.开始截图ToolStripMenuItem_Click);
+            // 
+            // 发送文件ToolStripMenuItem
+            // 
+            this.发送文件ToolStripMenuItem.Name = "发送文件ToolStripMenuItem";
+            this.发送文件ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.发送文件ToolStripMenuItem.Text = "发送文件";
+            this.发送文件ToolStripMenuItem.Click += new System.EventHandler(this.发送文件ToolStripMenuItem_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(606, 11);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 12);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "CMD指令：";
+            // 
+            // textBoxCmdRet
+            // 
+            this.textBoxCmdRet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxCmdRet.BackColor = System.Drawing.Color.White;
+            this.textBoxCmdRet.Location = new System.Drawing.Point(596, 35);
+            this.textBoxCmdRet.Multiline = true;
+            this.textBoxCmdRet.Name = "textBoxCmdRet";
+            this.textBoxCmdRet.ReadOnly = true;
+            this.textBoxCmdRet.Size = new System.Drawing.Size(371, 495);
+            this.textBoxCmdRet.TabIndex = 12;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1034, 458);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.comboBoxCmd);
-            this.Controls.Add(this.buttonCmd);
-            this.Controls.Add(this.buttonMB);
-            this.Controls.Add(this.buttonPrtSc);
-            this.Controls.Add(this.buttonSendFile);
-            this.Controls.Add(this.buttonSend);
-            this.Controls.Add(this.richTextBoxSend);
-            this.Controls.Add(this.richTextBoxMessages);
+            this.ClientSize = new System.Drawing.Size(975, 610);
+            this.Controls.Add(this.tabControlMain);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStripTool);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -256,6 +309,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.tabControlMain.ResumeLayout(false);
+            this.tabPageMain.ResumeLayout(false);
+            this.tabPageMain.PerformLayout();
+            this.tabPageSc.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -268,9 +325,6 @@
         private System.Windows.Forms.RichTextBox richTextBoxMessages;
         private System.Windows.Forms.RichTextBox richTextBoxSend;
         private System.Windows.Forms.Button buttonSend;
-        private System.Windows.Forms.Button buttonSendFile;
-        private System.Windows.Forms.Button buttonPrtSc;
-        private System.Windows.Forms.Button buttonMB;
         private System.Windows.Forms.MenuStrip menuStripTool;
         private System.Windows.Forms.ToolStripMenuItem 设置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 启动项配置ToolStripMenuItem;
@@ -280,6 +334,14 @@
         private System.Windows.Forms.Button buttonCmd;
         private System.Windows.Forms.ComboBox comboBoxCmd;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStripMenuItem 开启键盘监听ToolStripMenuItem;
+        private System.Windows.Forms.TabControl tabControlMain;
+        private System.Windows.Forms.TabPage tabPageMain;
+        private System.Windows.Forms.TabPage tabPageSc;
+        private System.Windows.Forms.ToolStripMenuItem 开始截图ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 发送文件ToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBoxCmdRet;
+        private System.Windows.Forms.Label label1;
     }
 }
 

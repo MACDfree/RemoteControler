@@ -84,6 +84,13 @@ namespace 远程通信控制系统
             {
                 登录ToolStripMenuItem.Visible = false;
                 注册ToolStripMenuItem.Visible = false;
+                开启键盘监听ToolStripMenuItem.Visible = false;
+                开始截图ToolStripMenuItem.Visible = false;
+                发送文件ToolStripMenuItem.Visible = false;
+                tabPageSc.Parent = null; // 隐藏tab页
+                this.Text = this.Text.Split('★')[0] + "★服务器端";
+                comboBoxCmd.Enabled = false;
+                buttonCmd.Enabled = false;
                 service = TcpCommon.getService();
                 if (service == null)
                 {
@@ -96,6 +103,13 @@ namespace 远程通信控制系统
             {
                 登录ToolStripMenuItem.Visible = true;
                 注册ToolStripMenuItem.Visible = true;
+                开启键盘监听ToolStripMenuItem.Visible = true;
+                开始截图ToolStripMenuItem.Visible = true;
+                发送文件ToolStripMenuItem.Visible = true;
+                tabPageSc.Parent = tabControlMain; // 隐藏tab页
+                this.Text = this.Text.Split('★')[0] + "★客户端";
+                comboBoxCmd.Enabled = true;
+                buttonCmd.Enabled = true;
             }
         }
 
@@ -315,6 +329,20 @@ namespace 远程通信控制系统
             }
         }
 
+        private void setCmdRet(string text)
+        {
+            if (this.textBoxCmdRet.InvokeRequired)
+            {
+                Action<string> d = setText;
+                this.textBoxCmdRet.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.textBoxCmdRet.AppendText(text + Environment.NewLine);
+                this.textBoxCmdRet.ScrollToCaret();
+            }
+        }
+
         private void setImg(Image img)
         {
             if (this.pictureBox.InvokeRequired)
@@ -447,8 +475,8 @@ namespace 远程通信控制系统
                                         }
                                         else if (obj["cmd"].ToString() == "7") // cmd
                                         {
-                                            setText("指令返回值：");
-                                            setText(obj["msg"].ToString());
+                                            setCmdRet("指令返回值：");
+                                            setCmdRet(obj["msg"].ToString());
                                         }
                                     }
                                 }
@@ -480,71 +508,6 @@ namespace 远程通信控制系统
                 if (!GlobalVal.isService && GlobalVal.isLogin)
                 {
                     toolStripStatusLabel.Text = GlobalVal.username + "注册成功！";
-                }
-            }
-        }
-
-        private void buttonSendFile_Click(object sender, EventArgs e)
-        {
-            if (!GlobalVal.isLogin)
-            {
-                MessageBox.Show("请先登录！");
-                return;
-            }
-            if (GlobalVal.isService)
-            {
-                return;
-            }
-            else
-            {
-                OpenFileDialog fileDialog = new OpenFileDialog();
-                fileDialog.Multiselect = false;
-                fileDialog.Title = "文件选择";
-                if (fileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    fileName = fileDialog.FileName;// 获取文件路径
-                    Client client = TcpCommon.getClient();
-                    try
-                    {
-                        client.Connect();
-                        JObject obj = new JObject(new JProperty("cmd", 5), new JProperty("filename", fileName.Substring(fileName.LastIndexOf('\\') + 1)));
-                        byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
-                        client.stream.Write(buff, 0, buff.Length);
-                    }
-                    catch (Exception ex)
-                    {
-                        LogUtil.GetLog().Write(ex);
-                        MessageBox.Show("运行出错！");
-                    }
-                }
-            }
-        }
-
-        private void buttonPrtSc_Click(object sender, EventArgs e)
-        {
-            if (!GlobalVal.isLogin)
-            {
-                MessageBox.Show("请先登录！");
-                return;
-            }
-            if (GlobalVal.isService)
-            {
-                return;
-            }
-            else
-            {
-                Client client = TcpCommon.getClient();
-                try
-                {
-                    client.Connect();
-                    JObject obj = new JObject(new JProperty("cmd", (int)MessageStr.CmdType.sc));
-                    byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
-                    client.stream.Write(buff, 0, buff.Length);
-                }
-                catch (Exception ex)
-                {
-                    LogUtil.GetLog().Write(ex);
-                    MessageBox.Show("运行出错！");
                 }
             }
         }
@@ -662,20 +625,6 @@ namespace 远程通信控制系统
             }
         }
 
-        private void buttonMB_Click(object sender, EventArgs e)
-        {
-            GlobalVal.isMonitor = !GlobalVal.isMonitor;
-            if(GlobalVal.isMonitor)
-            {
-                this.buttonMB.Text = "关闭键盘监控";
-            }
-            else
-            {
-                this.buttonMB.Text = "开启键盘监控";
-            }
-            this.KeyPreview = GlobalVal.isMonitor;
-        }
-
         private void MainForm_KeyUp(object sender, KeyEventArgs e)
         {
             if (!GlobalVal.isLogin)
@@ -700,6 +649,85 @@ namespace 远程通信控制系统
                 {
                     LogUtil.GetLog().Write(ex);
                     MessageBox.Show("运行出错！");
+                }
+            }
+        }
+
+        private void 开启键盘监听ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GlobalVal.isMonitor = !GlobalVal.isMonitor;
+            if (GlobalVal.isMonitor)
+            {
+                this.开启键盘监听ToolStripMenuItem.Text = "关闭键盘监控";
+            }
+            else
+            {
+                this.开启键盘监听ToolStripMenuItem.Text = "开启键盘监控";
+            }
+            this.KeyPreview = GlobalVal.isMonitor;
+        }
+
+        private void 开始截图ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!GlobalVal.isLogin)
+            {
+                MessageBox.Show("请先登录！");
+                return;
+            }
+            if (GlobalVal.isService)
+            {
+                return;
+            }
+            else
+            {
+                Client client = TcpCommon.getClient();
+                try
+                {
+                    client.Connect();
+                    JObject obj = new JObject(new JProperty("cmd", (int)MessageStr.CmdType.sc));
+                    byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
+                    client.stream.Write(buff, 0, buff.Length);
+                }
+                catch (Exception ex)
+                {
+                    LogUtil.GetLog().Write(ex);
+                    MessageBox.Show("运行出错！");
+                }
+            }
+        }
+
+        private void 发送文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!GlobalVal.isLogin)
+            {
+                MessageBox.Show("请先登录！");
+                return;
+            }
+            if (GlobalVal.isService)
+            {
+                return;
+            }
+            else
+            {
+                OpenFileDialog fileDialog = new OpenFileDialog();
+                fileDialog.Multiselect = false;
+                fileDialog.Title = "文件选择";
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    fileName = fileDialog.FileName;// 获取文件路径
+                    Client client = TcpCommon.getClient();
+                    try
+                    {
+                        client.Connect();
+                        JObject obj = new JObject(new JProperty("cmd", 5), new JProperty("filename", fileName.Substring(fileName.LastIndexOf('\\') + 1)));
+                        byte[] buff = Common.convertMessageToByte(MessageStr.getCommMessage(obj.ToString()));
+                        client.stream.Write(buff, 0, buff.Length);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtil.GetLog().Write(ex);
+                        MessageBox.Show("运行出错！");
+                    }
                 }
             }
         }

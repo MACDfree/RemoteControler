@@ -40,18 +40,18 @@
             this.启动项配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.登录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.注册ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.开启键盘监听ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.开始截图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.发送文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.buttonCmd = new System.Windows.Forms.Button();
             this.comboBoxCmd = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageMain = new System.Windows.Forms.TabPage();
-            this.tabPageSc = new System.Windows.Forms.TabPage();
-            this.开启键盘监听ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.开始截图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.发送文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
             this.textBoxCmdRet = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tabPageSc = new System.Windows.Forms.TabPage();
             this.statusStrip.SuspendLayout();
             this.menuStripTool.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -88,33 +88,34 @@
             // 
             // richTextBoxMessages
             // 
-            this.richTextBoxMessages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.richTextBoxMessages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBoxMessages.BackColor = System.Drawing.Color.White;
-            this.richTextBoxMessages.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBoxMessages.Location = new System.Drawing.Point(0, 0);
+            this.richTextBoxMessages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.richTextBoxMessages.Location = new System.Drawing.Point(0, 3);
             this.richTextBoxMessages.Name = "richTextBoxMessages";
             this.richTextBoxMessages.ReadOnly = true;
-            this.richTextBoxMessages.Size = new System.Drawing.Size(590, 449);
+            this.richTextBoxMessages.Size = new System.Drawing.Size(590, 446);
             this.richTextBoxMessages.TabIndex = 2;
             this.richTextBoxMessages.Text = "";
             // 
             // richTextBoxSend
             // 
             this.richTextBoxSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.richTextBoxSend.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBoxSend.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.richTextBoxSend.Location = new System.Drawing.Point(0, 455);
             this.richTextBoxSend.Name = "richTextBoxSend";
-            this.richTextBoxSend.Size = new System.Drawing.Size(505, 79);
+            this.richTextBoxSend.Size = new System.Drawing.Size(505, 72);
             this.richTextBoxSend.TabIndex = 3;
             this.richTextBoxSend.Text = "";
             // 
             // buttonSend
             // 
             this.buttonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonSend.Location = new System.Drawing.Point(511, 451);
+            this.buttonSend.Location = new System.Drawing.Point(511, 455);
             this.buttonSend.Name = "buttonSend";
-            this.buttonSend.Size = new System.Drawing.Size(79, 79);
+            this.buttonSend.Size = new System.Drawing.Size(79, 72);
             this.buttonSend.TabIndex = 4;
             this.buttonSend.Text = "发送";
             this.buttonSend.UseVisualStyleBackColor = true;
@@ -146,23 +147,44 @@
             // 启动项配置ToolStripMenuItem
             // 
             this.启动项配置ToolStripMenuItem.Name = "启动项配置ToolStripMenuItem";
-            this.启动项配置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.启动项配置ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.启动项配置ToolStripMenuItem.Text = "启动项配置";
             this.启动项配置ToolStripMenuItem.Click += new System.EventHandler(this.启动项配置ToolStripMenuItem_Click);
             // 
             // 登录ToolStripMenuItem
             // 
             this.登录ToolStripMenuItem.Name = "登录ToolStripMenuItem";
-            this.登录ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.登录ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.登录ToolStripMenuItem.Text = "登录";
             this.登录ToolStripMenuItem.Click += new System.EventHandler(this.登录ToolStripMenuItem_Click);
             // 
             // 注册ToolStripMenuItem
             // 
             this.注册ToolStripMenuItem.Name = "注册ToolStripMenuItem";
-            this.注册ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.注册ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.注册ToolStripMenuItem.Text = "注册";
             this.注册ToolStripMenuItem.Click += new System.EventHandler(this.注册ToolStripMenuItem_Click);
+            // 
+            // 开启键盘监听ToolStripMenuItem
+            // 
+            this.开启键盘监听ToolStripMenuItem.Name = "开启键盘监听ToolStripMenuItem";
+            this.开启键盘监听ToolStripMenuItem.Size = new System.Drawing.Size(92, 21);
+            this.开启键盘监听ToolStripMenuItem.Text = "开启键盘监听";
+            this.开启键盘监听ToolStripMenuItem.Click += new System.EventHandler(this.开启键盘监听ToolStripMenuItem_Click);
+            // 
+            // 开始截图ToolStripMenuItem
+            // 
+            this.开始截图ToolStripMenuItem.Name = "开始截图ToolStripMenuItem";
+            this.开始截图ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.开始截图ToolStripMenuItem.Text = "开始截图";
+            this.开始截图ToolStripMenuItem.Click += new System.EventHandler(this.开始截图ToolStripMenuItem_Click);
+            // 
+            // 发送文件ToolStripMenuItem
+            // 
+            this.发送文件ToolStripMenuItem.Name = "发送文件ToolStripMenuItem";
+            this.发送文件ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.发送文件ToolStripMenuItem.Text = "发送文件";
+            this.发送文件ToolStripMenuItem.Click += new System.EventHandler(this.发送文件ToolStripMenuItem_Click);
             // 
             // pictureBox
             // 
@@ -177,6 +199,7 @@
             // 
             // buttonCmd
             // 
+            this.buttonCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCmd.Location = new System.Drawing.Point(884, 7);
             this.buttonCmd.Name = "buttonCmd";
             this.buttonCmd.Size = new System.Drawing.Size(75, 23);
@@ -187,6 +210,7 @@
             // 
             // comboBoxCmd
             // 
+            this.comboBoxCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxCmd.FormattingEnabled = true;
             this.comboBoxCmd.Location = new System.Drawing.Point(671, 9);
             this.comboBoxCmd.Name = "comboBoxCmd";
@@ -235,47 +259,6 @@
             this.tabPageMain.TabIndex = 0;
             this.tabPageMain.Text = "主页";
             // 
-            // tabPageSc
-            // 
-            this.tabPageSc.Controls.Add(this.panel1);
-            this.tabPageSc.Location = new System.Drawing.Point(4, 22);
-            this.tabPageSc.Name = "tabPageSc";
-            this.tabPageSc.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSc.Size = new System.Drawing.Size(967, 530);
-            this.tabPageSc.TabIndex = 1;
-            this.tabPageSc.Text = "截图";
-            this.tabPageSc.UseVisualStyleBackColor = true;
-            // 
-            // 开启键盘监听ToolStripMenuItem
-            // 
-            this.开启键盘监听ToolStripMenuItem.Name = "开启键盘监听ToolStripMenuItem";
-            this.开启键盘监听ToolStripMenuItem.Size = new System.Drawing.Size(92, 21);
-            this.开启键盘监听ToolStripMenuItem.Text = "开启键盘监听";
-            this.开启键盘监听ToolStripMenuItem.Click += new System.EventHandler(this.开启键盘监听ToolStripMenuItem_Click);
-            // 
-            // 开始截图ToolStripMenuItem
-            // 
-            this.开始截图ToolStripMenuItem.Name = "开始截图ToolStripMenuItem";
-            this.开始截图ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.开始截图ToolStripMenuItem.Text = "开始截图";
-            this.开始截图ToolStripMenuItem.Click += new System.EventHandler(this.开始截图ToolStripMenuItem_Click);
-            // 
-            // 发送文件ToolStripMenuItem
-            // 
-            this.发送文件ToolStripMenuItem.Name = "发送文件ToolStripMenuItem";
-            this.发送文件ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.发送文件ToolStripMenuItem.Text = "发送文件";
-            this.发送文件ToolStripMenuItem.Click += new System.EventHandler(this.发送文件ToolStripMenuItem_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(606, 11);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 12);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "CMD指令：";
-            // 
             // textBoxCmdRet
             // 
             this.textBoxCmdRet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -287,6 +270,27 @@
             this.textBoxCmdRet.ReadOnly = true;
             this.textBoxCmdRet.Size = new System.Drawing.Size(371, 495);
             this.textBoxCmdRet.TabIndex = 12;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(606, 11);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 12);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "CMD指令：";
+            // 
+            // tabPageSc
+            // 
+            this.tabPageSc.Controls.Add(this.panel1);
+            this.tabPageSc.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSc.Name = "tabPageSc";
+            this.tabPageSc.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSc.Size = new System.Drawing.Size(967, 530);
+            this.tabPageSc.TabIndex = 1;
+            this.tabPageSc.Text = "截图";
+            this.tabPageSc.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 

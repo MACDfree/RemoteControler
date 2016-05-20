@@ -36,7 +36,7 @@ namespace 远程通信控制系统
                 {
                     if (client != null)
                     {
-                        setText("[服务器]：" + richTextBoxSend.Text);
+                        setText(DateTime.Now + " [服务器]：\r\n" + richTextBoxSend.Text);
                         byte[] buff = Common.convertMessageToByte(MessageStr.getTalkMessage(richTextBoxSend.Text));
                         client.GetStream().Write(buff, 0, buff.Length);
                     }
@@ -52,13 +52,14 @@ namespace 远程通信控制系统
                     }
                     try
                     {
-                        setText("[" + GlobalVal.username + "]：" + richTextBoxSend.Text);
+                        setText(DateTime.Now + " [" + GlobalVal.username + "]：\r\n" + richTextBoxSend.Text);
                         client.Connect();
                         byte[] buff = Common.convertMessageToByte(MessageStr.getTalkMessage(richTextBoxSend.Text));
                         client.stream.Write(buff, 0, buff.Length);
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        LogUtil.GetLog().Write(ex);
                         MessageBox.Show("运行出错！");
                     }
                 }
@@ -180,7 +181,7 @@ namespace 远程通信控制系统
                             case "3": //Talk
                                 if (GlobalVal.isLogin)
                                 {
-                                    setText("[" + GlobalVal.username + "]:" + obj["msg"].ToString());
+                                    setText(DateTime.Now + " [" + GlobalVal.username + "]:\r\n" + obj["msg"].ToString());
                                 }
                                 break;
                             case "4": //Regist
@@ -245,7 +246,7 @@ namespace 远程通信控制系统
                                     }
                                     catch (Exception ex)
                                     {
-                                        LogUtil.GetLog().Write(ex);
+                                        //LogUtil.GetLog().Write("测试一下", ex);
                                         return;
                                     }
                                 });
@@ -300,7 +301,8 @@ namespace 远程通信控制系统
                                 break;
                             case "12": // K1
                                 string keydata = obj["key"].ToString();
-                                SendKeys.Send(keydata);
+                                //SendKeys.Send(keydata);
+                                setText(keydata);
                                 break;
                         }
                     }
@@ -308,11 +310,12 @@ namespace 远程通信控制系统
             }
             catch (Exception ex)
             {
-                LogUtil.GetLog().Write("服务器监听出错", ex);
+                //LogUtil.GetLog().Write("服务器监听出错", ex);
                 //MessageBox.Show("服务器监听出错！");
-                toolStripStatusLabel.Text = "服务器监听出错！";
+                Thread.CurrentThread.Join();
+                toolStripStatusLabel.Text = "客户端断开连接！";
+                goto loop;
             }
-            goto loop;
         }
 
         private void setText(string text)
@@ -333,7 +336,7 @@ namespace 远程通信控制系统
         {
             if (this.textBoxCmdRet.InvokeRequired)
             {
-                Action<string> d = setText;
+                Action<string> d = setCmdRet;
                 this.textBoxCmdRet.Invoke(d, new object[] { text });
             }
             else
@@ -447,7 +450,7 @@ namespace 远程通信控制系统
                                         JObject obj = JObject.Parse(content);
                                         if (obj["cmd"].ToString() == "3")//Talk
                                         {
-                                            setText("[服务器]：" + obj["msg"].ToString());
+                                            setText(DateTime.Now + " [服务器]：\r\n" + obj["msg"].ToString());
                                         }
                                         else if (obj["cmd"].ToString() == "5")
                                         {

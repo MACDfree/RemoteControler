@@ -87,7 +87,7 @@ namespace 远程通信控制系统
                 注册ToolStripMenuItem.Visible = false;
                 开启键盘监听ToolStripMenuItem.Visible = false;
                 开始截图ToolStripMenuItem.Visible = false;
-                发送文件ToolStripMenuItem.Visible = false;
+                //发送文件ToolStripMenuItem.Visible = false;
                 tabPageSc.Parent = null; // 隐藏tab页
                 this.Text = this.Text.Split('★')[0] + "★服务器端";
                 comboBoxCmd.Enabled = false;
@@ -106,7 +106,7 @@ namespace 远程通信控制系统
                 注册ToolStripMenuItem.Visible = true;
                 开启键盘监听ToolStripMenuItem.Visible = true;
                 开始截图ToolStripMenuItem.Visible = true;
-                发送文件ToolStripMenuItem.Visible = true;
+                //发送文件ToolStripMenuItem.Visible = true;
                 tabPageSc.Parent = tabControlMain; // 隐藏tab页
                 this.Text = this.Text.Split('★')[0] + "★客户端";
                 comboBoxCmd.Enabled = true;
@@ -114,6 +114,7 @@ namespace 远程通信控制系统
             }
         }
 
+        // 服务器端监听线程
         private void ListenFun()
         {
             client = null;
@@ -361,54 +362,54 @@ namespace 远程通信控制系统
             }
         }
 
-        private Image GetThumbnail(Image b, int destHeight, int destWidth)
-        {
-            if (destHeight == 0 || destWidth == 0)
-            {
-                return b;
-            }
-            Image imgSource = b;
-            ImageFormat thisFormat = imgSource.RawFormat;
-            int sW = 0, sH = 0;
-            // 按比例缩放           
-            int sWidth = imgSource.Width;
-            int sHeight = imgSource.Height;
-            if (sHeight > destHeight || sWidth > destWidth)
-            {
-                if ((sWidth * destHeight) > (sHeight * destWidth))
-                {
-                    sW = destWidth;
-                    sH = (destWidth * sHeight) / sWidth;
-                }
-                else
-                {
-                    sH = destHeight;
-                    sW = (sWidth * destHeight) / sHeight;
-                }
-            }
-            else
-            {
-                sW = sWidth;
-                sH = sHeight;
-            }
-            Bitmap outBmp = new Bitmap(destWidth, destHeight);
-            Graphics g = Graphics.FromImage(outBmp);
-            g.Clear(Color.Transparent);
-            // 设置画布的描绘质量         
-            g.CompositingQuality = CompositingQuality.HighSpeed;
-            g.SmoothingMode = SmoothingMode.HighQuality;
-            g.InterpolationMode = InterpolationMode.Low;
-            g.DrawImage(imgSource, new Rectangle((destWidth - sW) / 2, (destHeight - sH) / 2, sW, sH), 0, 0, imgSource.Width, imgSource.Height, GraphicsUnit.Pixel);
-            g.Dispose();
-            // 以下代码为保存图片时，设置压缩质量
-            EncoderParameters encoderParams = new EncoderParameters();
-            long[] quality = new long[1];
-            quality[0] = 100;
-            EncoderParameter encoderParam = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
-            encoderParams.Param[0] = encoderParam;
-            imgSource.Dispose();
-            return outBmp;
-        }
+        //private Image GetThumbnail(Image b, int destHeight, int destWidth)
+        //{
+        //    if (destHeight == 0 || destWidth == 0)
+        //    {
+        //        return b;
+        //    }
+        //    Image imgSource = b;
+        //    ImageFormat thisFormat = imgSource.RawFormat;
+        //    int sW = 0, sH = 0;
+        //    // 按比例缩放           
+        //    int sWidth = imgSource.Width;
+        //    int sHeight = imgSource.Height;
+        //    if (sHeight > destHeight || sWidth > destWidth)
+        //    {
+        //        if ((sWidth * destHeight) > (sHeight * destWidth))
+        //        {
+        //            sW = destWidth;
+        //            sH = (destWidth * sHeight) / sWidth;
+        //        }
+        //        else
+        //        {
+        //            sH = destHeight;
+        //            sW = (sWidth * destHeight) / sHeight;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        sW = sWidth;
+        //        sH = sHeight;
+        //    }
+        //    Bitmap outBmp = new Bitmap(destWidth, destHeight);
+        //    Graphics g = Graphics.FromImage(outBmp);
+        //    g.Clear(Color.Transparent);
+        //    // 设置画布的描绘质量         
+        //    g.CompositingQuality = CompositingQuality.HighSpeed;
+        //    g.SmoothingMode = SmoothingMode.HighQuality;
+        //    g.InterpolationMode = InterpolationMode.Low;
+        //    g.DrawImage(imgSource, new Rectangle((destWidth - sW) / 2, (destHeight - sH) / 2, sW, sH), 0, 0, imgSource.Width, imgSource.Height, GraphicsUnit.Pixel);
+        //    g.Dispose();
+        //    // 以下代码为保存图片时，设置压缩质量
+        //    EncoderParameters encoderParams = new EncoderParameters();
+        //    long[] quality = new long[1];
+        //    quality[0] = 100;
+        //    EncoderParameter encoderParam = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
+        //    encoderParams.Param[0] = encoderParam;
+        //    imgSource.Dispose();
+        //    return outBmp;
+        //}
 
         private void 登录ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -442,6 +443,15 @@ namespace 远程通信控制系统
                                             Image img = Image.FromStream(new MemoryStream(filecontent));
                                             //setImg(GetThumbnail(img, this.pictureBox.Height, this.pictureBox.Width));
                                             setImg(img);
+                                        }
+                                        else
+                                        {
+                                            LogUtil.GetLog().Write(GlobalVal.currentDir + "\\res\\" + filename);
+                                            FileStream fs = new FileStream(GlobalVal.currentDir + "\\res\\" + filename, FileMode.OpenOrCreate, FileAccess.Write);
+                                            fs.Write(filecontent, 0, filecontent.Length);
+                                            fs.Close();
+                                            MessageBox.Show("接收到服务器端文件：" + filename);
+                                            toolStripStatusLabel.Text = filename + "接收文件成功！";
                                         }
                                     }
                                     else
@@ -708,7 +718,30 @@ namespace 远程通信控制系统
             }
             if (GlobalVal.isService)
             {
-                return;
+                OpenFileDialog fileDialog = new OpenFileDialog();
+                fileDialog.Multiselect = false;
+                fileDialog.Title = "文件选择";
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    fileName = fileDialog.FileName;// 获取文件路径
+                    if(client!=null)
+                    {
+                        FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                        BinaryReader read = new BinaryReader(fileStream);
+                        long length = read.BaseStream.Length;
+                        // 获取文件字节数组
+                        byte[] temp = new byte[length];
+                        for (int i = 0; i < read.BaseStream.Length; i++)
+                        {
+                            temp[i] = read.ReadByte();
+                        }
+                        read.Close();
+                        fileStream.Close();
+                        byte[] buff1 = Common.convertMessageToByte(MessageFile.getFileMessage(fileName.Substring(fileName.LastIndexOf('\\') + 1), temp));
+                        client.GetStream().Write(buff1, 0, buff1.Length);
+                        MessageBox.Show("文件已传输！");
+                    }
+                }
             }
             else
             {
